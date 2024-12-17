@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{%load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">
+    <link rel="stylesheet" href="{% static "deps/css/form.css" %}">
+{% endblock  %}
+
+{% block content %}
+    <div class="features">
+        <h1>Создать новую компанию</h1>
+        <form method="post">
+            {% csrf_token %}
+            {% crispy form %}
+            
+            <span>{{ error }}</span>
+            <button class="btn btn-info"><i class="fas fa-plus-circle">Создать</button>
+            </form>
+            
+        </div>
+        
+        {% endblock  %}
+        
+        
+        
+        {% block footer %}
+        {% comment %} <footer class="py-4 bg-dark">
+            <div class="container">
+                <p class="m-0 text-center text-white">Copyright &copy; РђРІР°СЂРёР№РЅРѕ-РґРёСЃРїРµС‡РµСЂСЃРєР°СЏ СЃР»СѓР¶Р±Р° 2024</p>
+                </div>
+                </footer>  {% endcomment %}
+                {% endblock  %}
+                
+                {% comment %} {{ form.name }}<br>
+                {{ form.city }}<br>
+                {{ form.phone_number }}<br><br>
+                {{ form.mail }}<br> 
+                {{ form.info }}<br>
+                {{ form.sms_master }}<br>
+                {{ form.sms_worker }}<br><br>
+                {{ form.status }}<br> {% endcomment %}

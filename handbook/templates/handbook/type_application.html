@@ -1,0 +1,42 @@
+{% extends "handbook/handbook.html" %}
+{%load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">
+	<link rel="stylesheet" href="{% static "deps/css/table.css" %}">
+{% endblock  %}
+
+{% block content %}
+{% csrf_token %}
+<h5 class="m-2"><strong>{{ title }}</strong></h5>
+	<ul>
+		<table class="table table-bordered" data-resizable-columns-id="demo-table">
+			<tr>
+				<th data-resizable-column-id="Тип заявки">Тип заявки</th>
+                <th data-resizable-column-id="Действия">Действия</th>
+            </tr>
+			<tr>	
+            {% for c in content %}
+                
+					<div class="mt-6 flex justify-content-between">
+                        
+						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.name }}</a></p></td>
+                        <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.do }}</a></p></td>
+					</div>
+			</tr>
+				{% endfor %}
+		</table>
+
+    </ul>
+
+{% endblock  %}
+
+
+
+{% comment %} {% block footer %}
+<footer class="py-4 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Аварийно-диспечерская служба 2024</p>
+    </div>
+</footer>
+{% endblock  %} {% endcomment %}

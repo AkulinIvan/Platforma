@@ -1,0 +1,44 @@
+{% extends "handbook/handbook.html" %}
+{%load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">
+	<link rel="stylesheet" href="{% static "deps/css/table.css" %}">
+{% endblock  %}
+
+{% block content %}
+{% csrf_token %}
+<h5 class="m-2"><strong>{{ title }}</strong></h5>
+	<ul>
+		<table class="table table-bordered" data-resizable-columns-id="demo-table">
+			<tr>
+				<th data-resizable-column-id="Имя">Имя</th>
+				<th data-resizable-column-id="Телефон">Телефон</th>
+                <th data-resizable-column-id="E-mail">E-mail</th>
+				<th data-resizable-column-id="Роль">Роль</th>
+				<th data-resizable-column-id="Компания">Компания</th>
+				<th data-resizable-column-id="Номер АТС">Номер АТС</th>
+                <th data-resizable-column-id="Вид смс">Вид смс</th>
+			</tr>
+			<tr>	
+            {% for c in content %}
+                
+					<div class="mt-6 flex justify-content-between">
+                        
+						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.name }}</a></p></td>
+						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.phone_number }}</a></p></td>
+						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.mail }}</a></p></td>
+						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.role }}</a></p></td>
+						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.company }}</a></p></td>
+                        <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.ATS }}</a></p></td>
+                        <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.sms }}</a></p></td>
+                    </div>
+			</tr>
+				{% endfor %}
+		</table>
+
+    </ul>
+{% endblock  %}
+
+
+

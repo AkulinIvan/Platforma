@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{%load static %}
+{% bootstrap_javascript jquery='full' %}
+{% block css %}
+    <link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">
+	
+    
+{% endblock  %}
+
+{% block content %}
+<div class="offset-5 col-md-6">
+    
+
+    <table class="table table-bordered" data-resizable-columns-id="demo-table">
+        
+    <h3 class="mb-4 text-xl">{{ object.date }}</h3>
+    <h2 class="mb-4 text-xl">{{ object.street }}</h2>
+    <h3 class="mb-4 text-xl">{{ object.house }}</h3>
+    <h3 class="mb-4 text-xl">{{ object.flat }}</h3>
+    <h3 class="mb-4 text-xl">{{ object.fio }}</h3>
+    <h3 class="mb-4 text-xl">{{ object.phone }}</h3>
+    <h3 class="mb-4 text-xl">{{ object.text}}</h3>
+    <h3 class="mb-4 text-xl">{{ object.materials }}</h3>
+    <h3 class="mb-4 text-xl">{{ object.worker }}</h3>
+    <h3 class="mb-4 text-xl">{{ object.user }}</h3>
+
+    </table>
+
+    </div>  
+</div>
+
+{% endblock  %}
+
+
+{% block footer %}
+<footer class="py-4 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Аварийно-диспечерская служба 2024</p>
+    </div>
+</footer>
+{% endblock  %} 
+

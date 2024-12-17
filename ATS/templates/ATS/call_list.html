@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{%load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">
+    <link rel="stylesheet" href="{% static "deps/css/table.css" %}">
+	
+{% endblock  %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    
+    <title>Лист звонков</title>
+</head>
+<body>
+    <h5 class="m-2"><strong>Лист звонков</strong></h5>
+    <table class="table table-bordered" data-resizable-columns-id="demo-table">
+        <tr>
+            <th>Кто принял звонок</th>
+            <th>Кто звонил</th>
+            <th>Начало вызова</th>
+            <th>Окончание вызова</th>
+            <th>Запись вызова</th>
+        </tr>
+        {% for call in calls %}
+        <tr>
+            <td>{{ call.callee }}</td>
+            <td>{{ call.caller }}</td>
+            <td>{{ call.start_time }}</td>
+            <td>{{ call.end_time }}</td>
+            <td><audio controls><source src="{{MEDIA_URL}}{{ATS.recording.url}}" type="audio/wav"></source></td>
+            {% comment %} <td><audio controls><source src="{{ ATS.recording.url }}" type="audio/wav"></audio></td> {% endcomment %}
+        </tr>
+    </form>
+        {% endfor %}
+    </table>
+</body>
+{% endblock  %}

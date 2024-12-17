@@ -1,0 +1,129 @@
+﻿{%load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "deps/css/bootstrap/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "deps/css/my_css.css" %}">
+    
+    <!-- Стиль footer-a для главной страницы -->
+    {% block css %}
+    
+    {% endblock  %}
+    <!-- Favicons for different platforms -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static "deps/favicon/apple-touch-icon.png" %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static "deps/favicon/favicon-32x32.png" %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static "deps/favicon/favicon-16x16.png" %}">
+    <link rel="manifest" href="{% static "deps/favicon/site.webmanifest" %}">
+    <title>{{ title }}</title>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+            <div class="container">
+                <a class="navbar-brand" href="{% url "main:index" %}">АДС</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown ">
+                            <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Информация
+                            </a>
+                            <ul class="dropdown-menu">
+                                
+                                <li><a class="dropdown-item  text-white" href="{% url "main:about" %}">Про нас</a></li>
+                            </ul>
+                        
+                            {% if not user.is_authenticated %}
+                                <li><a class="nav-link dropdown-toggle  text-white" href="{% url "userprofile:login" %}">Войти</a>
+                                </li>
+                                <li><a class="nav-link dropdown-toggle  text-white" href="{% url "userprofile:signup" %}">Регистрация</a>
+                                </li>
+                            {% else %}
+                                
+                                <li class="nav-item dropdown ">
+                                    <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        Мой профиль
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item  text-white" href="#">Заглушка</a>
+                                        </li>
+                                        {% if user.is_admin or user.is_staff %}
+                                        <li><a class="dropdown-item  text-white" href="{% url "admin:index" %}">Админ панель</a></li>
+                                        {% endif %}
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        
+                            
+                                    </ul>
+                                    {% if user.is_authenticated %}
+                                        <li><a class="nav-link dropdown-toggle text-white" href="{% url "list_of_request:create_application" %}">Новая заявка</a>
+                                        <li><a class="nav-link dropdown-toggle text-white" href="{% url "list_of_request:applications" %}">Заявки</a></li>
+                                        <li><a class="nav-link dropdown-toggle text-white" href="{% url "list_of_request:search_application" %}">Поиск заявок</a></li>
+                                        <li><a class="nav-link dropdown-toggle text-white" href="{% url "ATS:call_list" %}">Звонки</a></li>
+                                        <li><a class="nav-link dropdown-toggle text-white" href="{% url "handbook:handbook" %}">Справочник</a></li>
+                                    {% endif %}
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span></li>{% endif %}
+                </button>
+                        </li>
+                    </ul>
+                    
+                    {% comment %} <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success text-white" type="submit">Поиск</button>
+                    </form> {% endcomment %}
+                </div>
+                <li class="nav-item dropdown ">
+                    {% if user.is_authenticated %}
+                    <button class="btn btn-outline-success text-white" type="submit">
+                        <a class="nav-link dropdown-toggle" href="{% url "userprofile:logout" %}">Выйти</a></li></button>
+                    {% endif %}
+            </div>
+        </nav>
+    </header>
+    <section>
+        
+        <!-- Контент -->
+        
+            
+                
+                    <!-- Пустой блок на Ваше усмотрение -->
+                </div>
+                <div class="col-lg-10">
+                    <!-- Контент на странице -->
+                    {% include "includes/notifications.html" %}
+                    {% block content %}
+                    
+                    {% endblock  %}
+                </div>
+            </div>
+        </div>
+    </section>
+    {% block footer %}{% endblock %} 
+    
+    <script src="{% static "deps/js/jquery/jquery-3.7.0.min.js" %}"></script>
+    {% comment %} <script src="{% static "deps/js/jquery-events.js" %}"></script> {% endcomment %}
+    <script src="{% static "deps/js/jquery-ajax.js" %}"></script>
+    <script src="{% static "deps/js/bootstrap/bootstrap.bundle.min.js" %}"></script>
+</body>
+
+</html>

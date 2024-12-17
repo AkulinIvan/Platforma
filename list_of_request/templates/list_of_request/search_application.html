@@ -1,0 +1,108 @@
+﻿{% extends "base.html" %}
+
+
+
+{% block content %}
+    <form action="" method="get" id="search-application">
+        {{ filter.form.as_table }}
+        <input type="submit" />
+    </form>
+
+<div class="table-responsive">
+    <table class="table table-bordered" data-resizable-columns-id="demo-table">
+
+
+
+    <tr>
+        <th data-resizable-column-id="id">Номер</th>
+        <th data-resizable-column-id="Дата">Дата создания</th>
+        <th data-resizable-column-id="Улица">Улица</th>
+        <th data-resizable-column-id="Дом">Дом</th>
+        <th data-resizable-column-id="Квартира">Квартира</th>
+        <th data-resizable-column-id="Текст заявки">Текст заявки</th>
+        <th data-resizable-column-id="Срок исполнения">Срок исполнения</th>
+        <th data-resizable-column-id="ФИО заявителя">ФИО заявителя</th>
+        <th data-resizable-column-id="Телефон">Телефон</th>
+        <th data-resizable-column-id="Вид заявки">Вид заявки</th>
+        <th data-resizable-column-id="Тип заявки">Тип заявки</th>
+        <th data-resizable-column-id="Комментарий">Комментарий</th>
+        <th data-resizable-column-id="Повторная">Повторная</th>
+        <th data-resizable-column-id="Дата выполнения">Дата выполнения</th>
+        <th data-resizable-column-id="Статус заявки">Статус заявки</th>
+        <th data-resizable-column-id="Управляющая компания">Управляющая компания</th>
+        <th data-resizable-column-id="Исполнитель">Исполнитель</th>
+        <th data-resizable-column-id="Мастер">Мастер</th>
+        <th data-resizable-column-id="СМС исполнителю">СМС исполнителю</th>
+        <th data-resizable-column-id="СМС мастеру">СМС мастеру</th>
+        <th data-resizable-column-id="Материал">Материал</th>
+        <th data-resizable-column-id="Автор">Автор</th>
+        
+    </tr>
+    <tr>	
+        
+        {% for c in filter.qs %}
+        
+            <div class="mt-6 flex justify-content-between">
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}"><a href={{c.get_absolute_url}}>{{ c.id }}</a></p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.create_time }}</p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.street }}</p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.house }}</p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.flat }}</p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{c.text|truncatechars:35}}</p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.job_date }}</p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.fio }}</p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.phone }}</p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.view }}</p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.type }}</p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.comment }}</p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.povtornaya }}</p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.end_date }}</p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.record_status }}</p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.house.company }}</p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.house.worker }}</p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.house.master }}</p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.sms_worker }}</p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.sms_master }}</p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.materials }}</p></td>
+                <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.user }}</p></td>
+            </div>
+    </tr>
+        {% endfor %}
+</table> 
+</div>
+
+<!-- Пагинация -->
+
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center my-4">
+        <div class="custom-shadow d-flex">
+            <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+                <a class="page-link" href="{% if page_obj.has_previous %}
+                ?page={{ page_obj.previous_page_number }}
+                {% else %}
+                #
+                {% endif %}">Назад</a>
+            </li>
+            {% for page in page_obj.paginator.page_range %}
+            {% if page >= page_obj.number|add:-2 and page <= page_obj.number|add:2 %}
+            <li class="page-item {% if page_obj.number == page %}active{% endif %}">
+                <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            
+
+            <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
+                <a class="page-link" href="{% if page_obj.has_next %}
+                ?page={{ page_obj.next_page_number }}
+                {% else %}
+                #
+                {% endif %}">Дальше</a>
+            </li>
+        </div>
+    </ul>
+</nav>
+{% endblock  %}
+
+

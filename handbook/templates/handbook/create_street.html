@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{%load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">
+    <link rel="stylesheet" href="{% static "deps/css/form.css" %}">
+{% endblock  %}
+
+{% block content %}
+    <div class="features">
+        <h1>Добавить новую улицу</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.name }}<br>
+            {{ form.city }}<br>
+            {{ form.status }}<br><br>
+            
+            <span>{{ error }}</span>
+            <button class="btn btn-info"><i class="fas fa-plus-circle">Создать</button>
+        </form>
+        
+    </div>
+    
+{% endblock  %}
+
+
+
+{% block footer %}
+{% comment %} <footer class="py-4 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; РђРІР°СЂРёР№РЅРѕ-РґРёСЃРїРµС‡РµСЂСЃРєР°СЏ СЃР»СѓР¶Р±Р° 2024</p>
+    </div>
+</footer>  {% endcomment %}
+{% endblock  %}

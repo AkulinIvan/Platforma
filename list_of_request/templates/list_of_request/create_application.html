@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{%load static %}
+{% load bootstrap4 %}
+{% block css %}
+
+
+<link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">
+<link rel="stylesheet" href="{% static "deps/css/form.css" %}">
+{% endblock  %}
+
+
+{% block content %}
+
+    <div class="offset-5 col-md-6">
+    <h1>Новая заявка</h1>
+    </div>
+    <div>
+        <form method="post" enctype='multipart/form-data' id="application-form">
+        {% comment %} <form action="#" class="form"> {% endcomment %}
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+            <button type="submit" class="btn btn-primary"> Сохранить заявку </button>
+            {% endbuttons %}
+            </form>
+            <div class="posts"></div>
+            
+            
+            
+            {% endblock  %}
+    {% comment %} <form method="post" enctype='multipart/form-data' id="application-form">
+        <div class="form-group">
+        {% csrf_token %}
+        <table>
+        {{ form.as_table }}
+        </table> {% endcomment %}
+            {% comment %} {{ form.create_time }}<br>
+            {{ form.street }}<br>
+            {{ form.house }}<br><br>
+            {{ form.flat }}<br> 
+            {{ form.text }}<br>
+            {{ form.phone }}<br>
+            {{ form.fio }}<br><br>
+            {{ form.view }}<br>
+            {{ form.type }}<br>
+            {{ form.company }}<br>
+            {{ form.master }}<br>
+            {{ form.worker }}<br>
+            {{ form.comment }}<br>
+            {{ form.files }}<br><br>
+            {{ form.materials }}<br>  {% endcomment %}
+            
+            {% comment %} <span>{{ error }}</span> {% endcomment %}
+            <button
+                type="submit"
+                class="btn btn-primary"
+            >
+                РЎРѕС…СЂР°РЅРёС‚СЊ Р·Р°СЏРІРєСѓ
+            </button>
+            
+            {% comment %} <button type="submit"><i class="fas fa-plus-circle">РЎРѕС…СЂР°РЅРёС‚СЊ Р·Р°СЏРІРєСѓ</button> {% endcomment %}
+            </div>
+            </form>
+            {% comment %} <script src="https://code.jquery.com/jquery-3.5.1.js" 
+                integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" 
+                    crossorigin="anonymous"></script> 
+
+            <script type="text/javascript"> 
+            $(document).on('submit','#application-form',function(e){ 
+                e.preventDefault(); 
+                $.ajax({ 
+                    type:'POST', 
+                    url:'{% url "list_of_request:applications" %}', 
+                    data: 
+                    { 
+                        form:$("#form").val(), 
+                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val() 
+                    }, 
+                    success:function(){
+                        
+                        alert('Р—Р°СЏРІРєР° СЃРѕС…СЂР°РЅРµРЅР°'); 
+                            } 
+                    }) 
+        }); 
+    </script>  {% endcomment %}
+    </div>
+
+{% comment %} {% endblock  %} {% endcomment %}
+
+        {% comment %} {% block footer %}
+<footer class="py-4 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; РђРІР°СЂРёР№РЅРѕ-РґРёСЃРїРµС‡РµСЂСЃРєР°СЏ СЃР»СѓР¶Р±Р° 2024</p>
+    </div>
+</footer>  
+{% endblock  %}  {% endcomment %}
+
+
+
+
+
