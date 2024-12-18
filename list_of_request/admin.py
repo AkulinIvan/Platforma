@@ -16,12 +16,13 @@ class UserApplicationAdmin(admin.TabularInline):
 class ArticlesAdmin(admin.ModelAdmin):
     exclude = ('created_by',)
     # prepopulated_fields = {'street': ('house',)}
-    list_display = ['fio', 'phone', 'text', 'create_time', 'street', 'house', 'flat', 'worker', 'user']
+    list_display = ['fio', 'phone', 'text', 'create_time', 'last_update', 'street', 'house', 'flat', 'worker', 'user']
     list_editable = ['worker']
     search_fields = ['street', 'worker', 'fio']
     list_filter = ['street', 'worker', 'create_time', 'phone']
     fields = [
         'create_time',
+        'last_update',
         ('street', 'house', 'flat'),
         ('fio', 'phone'),
         'text',

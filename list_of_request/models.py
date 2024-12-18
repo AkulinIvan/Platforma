@@ -12,8 +12,8 @@ from handbook.models import Company, Dezh_Worker, House, Master, Street, Type_ap
 
 class Articles(models.Model):
     
-    ACTIVE = 'ACTIVE'
-    ARCHIVE = 'ARCHIVE'
+    ACTIVE = 'активная'
+    ARCHIVE = 'архивная'
     
     CHOICES_RECORD = {
         ACTIVE: 'активная',
@@ -37,7 +37,7 @@ class Articles(models.Model):
     house = models.ForeignKey(to=House,  on_delete=models.PROTECT, null=True, blank=True, verbose_name="Дом",) 
     flat = models.CharField('Квартира', max_length=3, null=True)
     text = models.TextField('Текст заявки', null=True, blank=True, max_length=255)
-    phone = PhoneNumberField('Номер телефона', null=True, blank=True, max_length=12)
+    phone = PhoneNumberField('Номер телефона', null=True, blank=True, max_length=18)
     extension_phone = models.CharField('Доп. телефон', max_length=50, default='Не указан номер')
     fio = models.CharField('ФИО заявителя', null=True, blank=True, max_length=50)
     job_date = models.DateField('Срок исполнения', null=True, blank=True)
@@ -92,7 +92,7 @@ class Articles(models.Model):
         ]
         
     def __str__(self):
-        return f"{self.phone}: {self.text}"
+        return f"Заявка №{self.id} для {self.text}"
     
     
     

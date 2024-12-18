@@ -1,4 +1,6 @@
-from sms_app.views import send_sms_via_tele2
+
+
+# from sms_app.views import send_sms_via_tele2
 
 
 # @app.task
@@ -25,13 +27,13 @@ from sms_app.views import send_sms_via_tele2
 #             model.status = out
 #             model.save(False)
 #             if out == 'delivered':
-#                 application_sms_status = 'Доставлено'
+#                 application_sms_status = 'Р”РѕСЃС‚Р°РІР»РµРЅРѕ'
 #             elif out == 'billed':
-#                 application_sms_status = 'Передано на сервер'
+#                 application_sms_status = 'РџРµСЂРµРґР°РЅРѕ РЅР° СЃРµСЂРІРµСЂ'
 #             elif out == 'sending':
-#                 application_sms_status = 'Отправлено адресату'
+#                 application_sms_status = 'РћС‚РїСЂР°РІР»РµРЅРѕ Р°РґСЂРµСЃР°С‚Сѓ'
 #             else:
-#                 application_sms_status = 'Ошибка отправки'
+#                 application_sms_status = 'РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё'
 
 #             application = Articles.find_one({'nomer': model.application_nomer})
 #             if model.client_type == 'master':
@@ -51,13 +53,13 @@ from sms_app.views import send_sms_via_tele2
 #         model.status = out
 #         model.save(False)
 #         if out == 'delivered':
-#             application_sms_status = 'Доставлено'
+#             application_sms_status = 'Р”РѕСЃС‚Р°РІР»РµРЅРѕ'
 #         elif out == 'billed':
-#             application_sms_status = 'Передано на сервер'
+#             application_sms_status = 'РџРµСЂРµРґР°РЅРѕ РЅР° СЃРµСЂРІРµСЂ'
 #         elif out == 'sending':
-#             application_sms_status = 'Отправлено адресату'
+#             application_sms_status = 'РћС‚РїСЂР°РІР»РµРЅРѕ Р°РґСЂРµСЃР°С‚Сѓ'
 #         else:
-#             application_sms_status = 'Ошибка отправки'
+#             application_sms_status = 'РћС€РёР±РєР° РѕС‚РїСЂР°РІРєРё'
 
 #         application = Articles.find_one({'nomer': model.application_nomer})
 #         if model.client_type == 'master':
@@ -80,31 +82,31 @@ from sms_app.views import send_sms_via_tele2
 # from list_of_request.models import Articles
 
 # def inform_executor(articles=Articles):
-#     # Отправка SMS исполнителю
+#     # РћС‚РїСЂР°РІРєР° SMS РёСЃРїРѕР»РЅРёС‚РµР»СЋ
 #     client = Client('AC8b5e8bd3263a2d5566f2fd67e34fe5b4', '7e866c03e65eab8f058cfc8e0a185e9c')
 #     executor_phone = articles.phone_worker
-#     message = f"Новая заявка: Адрес: {articles.street, articles.house, articles.flat}, Телефон: {articles.phone}, Текст: {articles.text}"
+#     message = f"РќРѕРІР°СЏ Р·Р°СЏРІРєР°: РђРґСЂРµСЃ: {articles.street, articles.house, articles.flat}, РўРµР»РµС„РѕРЅ: {articles.phone}, РўРµРєСЃС‚: {articles.text}"
 #     client.messages.create(body=message, from_='+12164388146', to=executor_phone)
 
-#     # Информировать жителя о назначении исполнителя
-#     resident_message = f"Вашу заявку назначили исполнителю: {articles.executor.name}"
+#     # Р�РЅС„РѕСЂРјРёСЂРѕРІР°С‚СЊ Р¶РёС‚РµР»СЏ Рѕ РЅР°Р·РЅР°С‡РµРЅРёРё РёСЃРїРѕР»РЅРёС‚РµР»СЏ
+#     resident_message = f"Р’Р°С€Сѓ Р·Р°СЏРІРєСѓ РЅР°Р·РЅР°С‡РёР»Рё РёСЃРїРѕР»РЅРёС‚РµР»СЋ: {articles.executor.name}"
 #     client.messages.create(body=resident_message, from_='+12164388146', to=articles.phone)
     
     
 # # def send_sms():
     
-# #         # РџРѕР»СѓС‡Р°РµРј РїРѕСЃР»РµРґРЅРµРµ СЃРѕРѕР±С‰РµРЅРёРµ
+# #         # Р СџР С•Р В»РЎС“РЎвЂЎР В°Р ВµР С� Р С—Р С•РЎРѓР В»Р ВµР Т‘Р Р…Р ВµР Вµ РЎРѓР С•Р С•Р В±РЎвЂ°Р ВµР Р…Р С‘Р Вµ
 # #         message = SMS_Message.objects.last()
         
 # #         if not message:
 # #             return JsonResponse({'status': 'error', 'message': 'No messages found.'})
 
-# #         # РќР°СЃС‚СЂРѕР№РєРё API
-# #         api_url = "https://smsc.ru/sys/send.php?login=ADPlatforma&psw=J4h-ziU-eN4-fp3&phones=89535855757&mes=С‚РµРєСЃС‚2"  # РџСЂРёРјРµСЂ URL, СѓС‚РѕС‡РЅРёС‚Рµ РїРѕ РґРѕРєСѓРјРµРЅС‚Р°С†РёРё
+# #         # Р СњР В°РЎРѓРЎвЂљРЎР‚Р С•Р в„–Р С”Р С‘ API
+# #         api_url = "https://smsc.ru/sys/send.php?login=ADPlatforma&psw=J4h-ziU-eN4-fp3&phones=89535855757&mes=РЎвЂљР ВµР С”РЎРѓРЎвЂљ2"  # Р СџРЎР‚Р С‘Р С�Р ВµРЎР‚ URL, РЎС“РЎвЂљР С•РЎвЂЎР Р…Р С‘РЎвЂљР Вµ Р С—Р С• Р Т‘Р С•Р С”РЎС“Р С�Р ВµР Р…РЎвЂљР В°РЎвЂ Р С‘Р С‘
         
-# #         # api_url = "http://newbsms.tele2.ru/api/send?operation=status&login=e3ae02e7bd&password=d590356ddd&id=&phones=89874353230&mes=С‚РµСЃС‚"
+# #         # api_url = "http://newbsms.tele2.ru/api/send?operation=status&login=e3ae02e7bd&password=d590356ddd&id=&phones=89874353230&mes=РЎвЂљР ВµРЎРѓРЎвЂљ"
         
-# #         # РћС‚РїСЂР°РІР»СЏРµРј РЎРњРЎ
+# #         # Р С›РЎвЂљР С—РЎР‚Р В°Р Р†Р В»РЎРЏР ВµР С� Р РЋР СљР РЋ
 # #         response = requests.get(f"{api_url}")
 # #         return response
 # # send_sms()
