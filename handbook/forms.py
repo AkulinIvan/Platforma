@@ -1,6 +1,8 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Company, House, Master, Street, Worker, City, Roles
+
+from companies.models import Companies
+from .models import House, Master, Street, Worker, City, Roles
 from django.contrib.auth.models import User
 
 
@@ -21,55 +23,7 @@ class WorkersForm(forms.ModelForm):
     master = forms.ModelChoiceField(queryset=Master.objects.all(), empty_label="Мастер не выбран", required=False, label="Мастер")
     
                     
-class CompanyForm(forms.ModelForm):
-    name = forms.TextInput()
-    city = forms.ModelChoiceField(queryset=City.objects.all(), empty_label="Город не выбран", required=False, label="Город")
-    phone_number = forms.TextInput()
-    mail = forms.TextInput()
-    info = forms.Textarea()
-    sms_master = forms.BooleanField()
-    sms_worker = forms.BooleanField()
-    status = forms.BooleanField()
-    
-    class Meta:
-        model = Company
-        fields = ['name', 'city', 'phone_number', 'mail', 'info', 'sms_master', 'sms_worker', 'status']
-        widgets = {
-            "name": forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Название'
-            }),
-            "city": forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Город'
-            }),
-            "phone_number": forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Номер телефона'
-            }),
-            "mail": forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'E-mail'
-            }),
-            "info": forms.Textarea(attrs={
-                'class': 'form-control',
-                'placeholder': 'Информация о компании'
-            })
-            # "sms_master": forms.TextInput(attrs={
-            #     'class': 'form-control',
-            #     'placeholder': 'Смс  мастеру:'
-            # }),
-            # "sms_worker": forms.TextInput(attrs={
-            #     'class': 'form-control',
-            #     'placeholder': 'Смс исполнителю:'
-            # }),
-            # "status": forms.TextInput(attrs={
-            #     'class': 'form-control',
-            #     'placeholder': 'Статус компании'
-            # })
-        
-        }
-    
+
 
 class CityForm(forms.ModelForm):
     name = forms.TextInput()
@@ -95,22 +49,83 @@ class StreetForm(forms.ModelForm):
                 'placeholder': 'Город'
             })
         }
+        
+class AddMasterForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].empty_label = 'Введите имя'
+        self.fields['phone_number'].empty_label = 'Введите номер телефона'
+        # self.fields['company'].empty_label = 'Введите номер телефона'
+        self.fields['user'].empty_label = 'Выберите аккаунт'
+    
+    class Meta:
+        model = Worker
+        fields = ['name', 'phone_number', 'company', 'user'] 
+        widgets = {
+            "name": forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Имя мастера'
+            }),
+            "phone_number": forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Номер телефона'
+            }),
+            # "company": forms.Select(attrs={
+            #     'class': 'form-control'                
+            # }),
+            "user": forms.Select(attrs={
+                'class': 'form-control'
+            })
+        }
+        def clean(self):
+            cleaned_data = super().clean()
+            return cleaned_data
+        
 
-class UsernamesForm(forms.ModelForm):
-    name = forms.TextInput()
-    phone_number = forms.TextInput()
-    mail = forms.TextInput()
-    role = forms.ModelChoiceField(queryset=Roles.objects.all(), empty_label="Роль не выбрана", required=False, label="Роль")
-    company = forms.ModelChoiceField(queryset=Company.objects.all(), empty_label="Компания не выбрана", required=False, label="Компания")
-    ATS = forms.TextInput()
-    sms = forms.TextInput()
-    user = forms.ModelChoiceField(queryset=User.objects.all(), empty_label="Пользователь не выбран", required=False, label="Пользователь")
-
+    
+class AddWorkerForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].empty_label = 'Введите имя'
+        self.fields['type_worker'].empty_label = 'Выберите тип заявок'
+        # self.fields['sms'].empty_label = 'Выберите статус смс'
+        self.fields['phone_number'].empty_label = 'Введите номер телефона'
+        # self.fields['company'].empty_label = 'Выберите компанию'
+        self.fields['user'].empty_label = 'Выберите аккаунт исполнителя'
+        
+    class Meta:
+        model = Worker
+        fields = ['name', 'type_worker', 'phone_number', 'user'] 
+        widgets = {
+            "name": forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Имя работника'
+            }),
+            "type_worker": forms.Select(attrs={
+                'class': 'form-control'
+            }),
+            "phone_number": forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Номер телефона'
+            }),
+            # "company": forms.Select(attrs={
+            #     'class': 'form-control'
+            # }),
+            # "sms": forms.BooleanField(attrs={
+            #     'class': 'form-control'
+            # }),
+            "user": forms.Select(attrs={
+                'class': 'form-control'
+            })
+        }
+        def clean(self):
+            cleaned_data = super().clean()
+            return cleaned_data
         
 class HouseForm(forms.ModelForm):
     name = forms.TextInput()
     street = forms.ModelChoiceField(queryset=Street.objects.all(), empty_label="Улица не выбрана", required=False, label="Улица")
-    company = forms.ModelChoiceField(queryset=Company.objects.all(), empty_label="Компания не выбрана", required=False, label="Компания")
+    company = forms.ModelChoiceField(queryset=Companies.objects.all(), empty_label="Компания не выбрана", required=False, label="Компания")
     master = forms.ModelChoiceField(queryset=Master.objects.all(), empty_label="Мастер не выбран", required=False, label="Мастер")
     status = forms.BooleanField()
     plumbing = forms.ModelChoiceField(queryset=Worker.objects.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")

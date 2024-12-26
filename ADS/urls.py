@@ -34,6 +34,7 @@ urlpatterns = [
     path('list_of_request/', include('list_of_request.urls', namespace='list_of_request')),
     path('user/', include('userprofile.urls', namespace='users')),
     path('handbook/', include('handbook.urls', namespace='handbook')),
+    path('company/', include('companies.urls', namespace='company')),
     path('calls/', include('ATS.urls', namespace='ATS')),
     path('api/v1/drf-auth/', include('rest_framework.urls')),
     # path('sms/', include('sms_app.urls', namespace='sms')),
@@ -41,6 +42,8 @@ urlpatterns = [
     re_path(r'^auth/', include('djoser.urls.authtoken')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += router.urls
+
+
 
 
 

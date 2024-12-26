@@ -6,8 +6,6 @@ app_name = 'handbook'
 
 urlpatterns = [
     path('', views.handbook, name='handbook'),
-    path('company/', views.company, name='company'),
-    path('create_company/', views.create_company, name='create_company'),
     path('city/', views.city, name='city'),
     path('street/', views.street, name='street'),
     path('create_street/', views.create_street, name='create_street'),
@@ -17,5 +15,7 @@ urlpatterns = [
     path('view_application/', views.view_application, name='view_application'),
     path('status_application/', views.status_application, name='status_application'),
     path('executors/', views.executor, name='executor'),
-    path('username/', views.username, name='username'),
+    path('executors/add', views.executor_add, name='add_executor'),
+    path('masters/', views.master, name='master'),
+    path('masters/add', views.master_add, name='add_master'),
 ]

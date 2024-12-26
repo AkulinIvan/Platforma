@@ -8,7 +8,8 @@ from django.contrib.auth.models import User
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy
 
-from handbook.models import Company, Dezh_Worker, House, Master, Street, Type_application, View_application, Worker
+from companies.models import Companies
+from handbook.models import Dezh_Worker, House, Master, Street, Type_application, View_application, Worker
 
 class Articles(models.Model):
     
@@ -45,7 +46,7 @@ class Articles(models.Model):
     type = models.ForeignKey(to=Type_application, on_delete=models.PROTECT, verbose_name="Тип заявки", null=True, blank=True)
     application_status = models.CharField(verbose_name='Статус заявки', max_length=50, validators=[status_validator], default=[0])
     povtornaya = models.CharField("Повторная", max_length=50, null=True, blank=True, default=None)
-    company = models.ForeignKey(to=Company, on_delete=models.PROTECT, null=True, blank=True, verbose_name="Компания", default=None)
+    company = models.ForeignKey(to=Companies, on_delete=models.PROTECT, null=True, blank=True, verbose_name="Компания", default=None)
     master = models.ForeignKey(to=Master, null=True, blank=True, verbose_name="Мастер", on_delete=models.PROTECT)
     worker = models.ForeignKey(to=Worker, null=True, blank=True, verbose_name="Исполнитель", on_delete=models.PROTECT)
     dezh_worker = models.ForeignKey(to=Dezh_Worker, on_delete=models.PROTECT, null=True, blank=True, verbose_name="Дежурный исполнитель", default=None)

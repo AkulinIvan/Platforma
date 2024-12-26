@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'handbook',
     'ATS',
     'sms_app',
+    'companies',
     
     'phonenumber_field',
     'rest_framework',

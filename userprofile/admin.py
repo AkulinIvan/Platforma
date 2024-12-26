@@ -9,15 +9,14 @@ from .models import Userprofile
 @admin.register(Userprofile)
 class UserprofileAdmin(admin.ModelAdmin):
     exclude = ('user',)
-    list_display = ['user', 'role', 'phone', 'company', 'nomer_АТС']
+    list_display = ['user', 'role', 'phone', 'nomer_ATS']
     list_editable = ['role']
-    search_fields = ['role', 'company']
-    list_filter = ['role', 'company']
+    search_fields = ['role']
+    list_filter = ['role']
     fields = [
         'role',
         'phone',
-        'company',
-        'nomer_АТС',
+        'nomer_ATS',
     ]
     
 

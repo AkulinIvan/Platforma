@@ -14,11 +14,9 @@
 			<tr>
 				<th data-resizable-column-id="Имя">Имя</th>
 				<th data-resizable-column-id="Телефон">Телефон</th>
-                <th data-resizable-column-id="E-mail">E-mail</th>
-				<th data-resizable-column-id="Роль">Роль</th>
 				<th data-resizable-column-id="Компания">Компания</th>
-				<th data-resizable-column-id="Номер АТС">Номер АТС</th>
-                <th data-resizable-column-id="Вид смс">Вид смс</th>
+				<th data-resizable-column-id="Исполнители">Исполнители</th>
+                <th data-resizable-column-id="Аккаунт пользователя">Аккаунт пользователя</th>
 			</tr>
 			<tr>	
             {% for c in content %}
@@ -27,11 +25,15 @@
                         
 						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.name }}</a></p></td>
 						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.phone_number }}</a></p></td>
-						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.mail }}</a></p></td>
-						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.role }}</a></p></td>
 						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.company }}</a></p></td>
-                        <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.ATS }}</a></p></td>
-                        <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.sms }}</a></p></td>
+						{% comment %} <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.workers.all }}</a></p></td> {% endcomment %}
+						
+						<td>{% for worker in c.workers.all %}
+							
+							<p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ worker }}</a></p>{% endfor %}
+							
+						</td>
+						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.user }}</a></p></td>
                     </div>
 			</tr>
 				{% endfor %}

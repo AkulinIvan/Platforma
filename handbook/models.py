@@ -4,7 +4,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-
+from companies.models import Companies
 
 
 
@@ -30,7 +30,10 @@ class Roles(models.Model):
         
 class Master(models.Model):
     name = models.CharField('Мастер', max_length=50)
-    
+    phone_number = PhoneNumberField('Номер телефона', null=True, blank=True, max_length=18)
+    company = models.ForeignKey(Companies, related_name='Мастера', on_delete=models.DO_NOTHING, null=True, blank=True)
+    workers = models.ManyToManyField('Worker', related_name='Workers')
+    user = models.OneToOneField(User, on_delete=models.DO_NOTHING, default='0')
     def __str__(self):
         return self.name
     
@@ -38,14 +41,18 @@ class Master(models.Model):
         db_table = 'master'
         verbose_name = 'Мастера'
         verbose_name_plural = 'Мастера'
-        ordering = ("id",)
+        ordering = ("name",)
 
 
 class Worker(models.Model):
-    name = models.CharField('Рабочий', max_length=50)
+    name = models.CharField('Исполнитель', max_length=50)
     type_worker = models.ForeignKey('Type_application', on_delete=models.DO_NOTHING, null=True)
-    address = models.ForeignKey('House', on_delete=models.DO_NOTHING, null=True, related_name='Адрес')
-    
+    phone_number = PhoneNumberField('Номер телефона', null=True, blank=True, max_length=18)
+    company = models.ForeignKey(Companies, on_delete=models.DO_NOTHING, null=True, related_name='Компания')
+    # sms = models.BooleanField('Смс', default=False)
+    user = models.OneToOneField(User, on_delete=models.DO_NOTHING, null=True, blank=True)
+    master = models.ForeignKey(Master, related_name='Мастер', on_delete=models.DO_NOTHING, null=True, blank=True)
+    # address = models.ForeignKey('House', on_delete=models.DO_NOTHING, null=True, related_name='Адрес')
     
     def __str__(self):
         return self.name 
@@ -70,37 +77,37 @@ class Dezh_Worker(models.Model):
         ordering = ("id",)
         
 
-class Workers(models.Model):
-    worker = models.ForeignKey(Worker, on_delete=models.DO_NOTHING, null=True)
-    master = models.ForeignKey(Master, on_delete=models.DO_NOTHING, null=True)
+# class Workers(models.Model):
+#     worker = models.ForeignKey(Worker, on_delete=models.DO_NOTHING, null=True)
+#     master = models.ForeignKey(Master, on_delete=models.DO_NOTHING, null=True)
     
-    class Meta:
-        db_table = 'workers'
-        verbose_name = 'Сотрудника'
-        verbose_name_plural = 'Сотрудники'
-        ordering = ("id",)
+#     class Meta:
+#         db_table = 'workers'
+#         verbose_name = 'Сотрудника'
+#         verbose_name_plural = 'Сотрудники'
+#         ordering = ("id",)
     
                 
-class Company(models.Model):
-    name = models.CharField('Название', max_length=50)
-    city = models.ForeignKey('City', on_delete=models.DO_NOTHING, null=True)
-    phone_number = PhoneNumberField('Номер телефона 1')
-    #phone = PhoneNumberField('Номер телефона 2')
-    mail = models.EmailField('E-mail', max_length=254)
-    info = models.TextField('Информация', default='Не заполнено')
-    sms_master = models.BooleanField('Смс мастеру', default=False)
-    sms_worker = models.BooleanField('Смс исполнителю', default=False)
-    status = models.BooleanField('Статус', default=False)
-    created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT)
+# class Company(models.Model):
+#     name = models.CharField('Название', max_length=50)
+#     city = models.ForeignKey('City', on_delete=models.DO_NOTHING, null=True)
+#     phone_number = PhoneNumberField('Номер телефона 1')
+#     #phone = PhoneNumberField('Номер телефона 2')
+#     mail = models.EmailField('E-mail', max_length=254)
+#     info = models.TextField('Информация', default='Не заполнено')
+#     sms_master = models.BooleanField('Смс мастеру', default=False)
+#     sms_worker = models.BooleanField('Смс исполнителю', default=False)
+#     status = models.BooleanField('Статус', default=False)
+#     created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT)
     
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
     
-    class Meta:
-        db_table = 'company'
-        verbose_name = 'Компанию'
-        verbose_name_plural = 'Компании'
-        ordering = ("id",)
+#     class Meta:
+#         db_table = 'company'
+#         verbose_name = 'Компанию'
+#         verbose_name_plural = 'Компании'
+#         ordering = ("id",)
 
 
 class City(models.Model):
@@ -221,7 +228,7 @@ class Usernames(models.Model):
     phone_number = PhoneNumberField('Номер телефона', blank=True)
     mail = models.EmailField('E-mail', max_length=254, blank=True)
     role = models.ForeignKey('Roles', on_delete=models.DO_NOTHING, null=True)
-    company = models.ForeignKey('Company', on_delete=models.DO_NOTHING, blank=True, default=None)
+    # company = models.ForeignKey(Companies, on_delete=models.DO_NOTHING, blank=True, default=None)
     ATS = models.PositiveIntegerField('Номер АТС', blank=False, default=0)
     sms = models.CharField(max_length=55, choices=CHOICES_SMS, default=EMPTY)
     user = models.OneToOneField(User, related_name='user', on_delete=models.CASCADE)
@@ -254,7 +261,7 @@ class House(models.Model):
     #abs = models.BooleanField(default=0)
     name = models.CharField('Номер дома', max_length=50)
     street = models.ForeignKey('Street', on_delete=models.DO_NOTHING, null=True)
-    company = models.ForeignKey('Company', on_delete=models.DO_NOTHING, null=True)
+    company = models.ForeignKey(Companies, on_delete=models.DO_NOTHING, null=True)
     master = models.ForeignKey('Master', on_delete=models.DO_NOTHING, null=True)
     worker = models.ForeignKey('Worker', blank=True, on_delete=models.DO_NOTHING, null=True)
     status = models.BooleanField('Статус', default=False)

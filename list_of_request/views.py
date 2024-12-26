@@ -1,10 +1,10 @@
 from django.views import View
 from .mixins import ApplicationMixin
-from handbook.models import House
+from handbook.models import House, Worker
 from .filters import ArticlesFilter
 from django_filters.views import FilterView
 from rest_framework import generics
-from django.db.models import Q
+from django.db.models import F
 
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.shortcuts import render
@@ -163,9 +163,18 @@ class ApplicationDetail(DetailView):
 def create_application(request):
     if request.method=="POST":
         form = ArticlesForm(request.POST, request.FILES)
+        # worker = Worker.objects.get.filter('name')
+        # type_worker = Worker.objects.get.filter('type_worker')
+        # address = Worker.objects.get.filter('address')
+        # type_application = Articles.objects.get.filter('type')
+        # house = Articles.objects.get.filter('house')
+        # if house == address and type_worker == type_application:
+        #     worker=worker
+        worker = Worker.objects.filter(address=F('articles__house')).values_list('worker', flat=True)#сделать двойную проверку по адресу и типу заявки, прежде чем выбирать worker
         if form.is_valid():
             new_app = form.save(commit=False)
             new_app.user = request.user
+            new_app.Worker = worker
             new_app.save()
             messages.success(request, 'Заявка успешно добавлена')
             return HttpResponseRedirect(reverse('list_of_request:applications'))

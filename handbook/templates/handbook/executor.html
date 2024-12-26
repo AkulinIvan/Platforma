@@ -12,18 +12,24 @@
 	<ul>
 		<table class="table table-bordered" data-resizable-columns-id="demo-table">
 			<tr>
-				<th data-resizable-column-id="Руководитель">Руководитель</th>
-                <th data-resizable-column-id="Исполнитель">Исполнитель</th>
-				<th data-resizable-column-id="Действия">Действия</th>
+				<th data-resizable-column-id="Имя исполнителя">Имя исполнителятель</th>
+                <th data-resizable-column-id="Тип заявок">Тип заявокель</th>
+				<th data-resizable-column-id="Номер телефона">Номер телефона</th>
+				<th data-resizable-column-id="Компания">Компания</th>
+                
+				<th data-resizable-column-id="Аккаунт">Аккаунт</th>
             </tr>
 			<tr>	
             {% for c in content %}
                 
 					<div class="mt-6 flex justify-content-between">
                         
-						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.master }}</a></p></td>
-                        <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.name }}</a></p></td>
-						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.do }}</a></p></td>
+						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.name }}</a></p></td>
+                        <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.type_worker }}</a></p></td>
+						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.phone_number }}</a></p></td>
+						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.company }}</a></p></td>
+                        
+						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.user }}</a></p></td>
 					</div>
 			</tr>
 				{% endfor %}
