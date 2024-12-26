@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from companies.models import Companies
+from companies.models import Companies, PublishedManager
 from .models import House, Master, Street, Worker, City, Roles
 from django.contrib.auth.models import User
 
@@ -19,8 +19,8 @@ class Dezh_WorkerForm(forms.ModelForm):
     
     
 class WorkersForm(forms.ModelForm):
-    worker = forms.ModelChoiceField(queryset=Worker.objects.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
-    master = forms.ModelChoiceField(queryset=Master.objects.all(), empty_label="Мастер не выбран", required=False, label="Мастер")
+    worker = forms.ModelChoiceField(queryset=Worker.published.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
+    master = forms.ModelChoiceField(queryset=Master.published.all(), empty_label="Мастер не выбран", required=False, label="Мастер")
     
                     
 
@@ -125,27 +125,28 @@ class AddWorkerForm(forms.ModelForm):
 class HouseForm(forms.ModelForm):
     name = forms.TextInput()
     street = forms.ModelChoiceField(queryset=Street.objects.all(), empty_label="Улица не выбрана", required=False, label="Улица")
-    company = forms.ModelChoiceField(queryset=Companies.objects.all(), empty_label="Компания не выбрана", required=False, label="Компания")
-    master = forms.ModelChoiceField(queryset=Master.objects.all(), empty_label="Мастер не выбран", required=False, label="Мастер")
+    company = forms.ModelChoiceField(queryset=Companies.published.all(), empty_label="Компания не выбрана", required=False, label="Компания")
+    master = forms.ModelChoiceField(queryset=Master.published.all(), empty_label="Мастер не выбран", required=False, label="Мастер")
     status = forms.BooleanField()
-    plumbing = forms.ModelChoiceField(queryset=Worker.objects.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
-    electrician = forms.ModelChoiceField(queryset=Worker.objects.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
-    carpenter = forms.ModelChoiceField(queryset=Worker.objects.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
-    cleaners = forms.ModelChoiceField(queryset=Worker.objects.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
-    wipers = forms.ModelChoiceField(queryset=Worker.objects.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
-    improvement = forms.ModelChoiceField(queryset=Worker.objects.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
-    plumber_certificate = forms.ModelChoiceField(queryset=Worker.objects.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
-    electrician_certificate = forms.ModelChoiceField(queryset=Worker.objects.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
-    networks = forms.ModelChoiceField(queryset=Worker.objects.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
-    act = forms.ModelChoiceField(queryset=Worker.objects.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
-    deratization = forms.ModelChoiceField(queryset=Worker.objects.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
-    pest_control = forms.ModelChoiceField(queryset=Worker.objects.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
-    disinfection = forms.ModelChoiceField(queryset=Worker.objects.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
-    verification_of_meters = forms.ModelChoiceField(queryset=Worker.objects.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
-    SOI_inspection = forms.ModelChoiceField(queryset=Worker.objects.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
-    passport = forms.ModelChoiceField(queryset=Worker.objects.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
-    intercom_ROST = forms.ModelChoiceField(queryset=Worker.objects.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
-
+    plumbing = forms.ModelChoiceField(queryset=Worker.published.all(), empty_label="Сантехник не выбран", required=False, label="Сантехник")
+    electrician = forms.ModelChoiceField(queryset=Worker.published.all(), empty_label="Электрик не выбран", required=False, label="Электрик")
+    carpenter = forms.ModelChoiceField(queryset=Worker.published.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
+    cleaners = forms.ModelChoiceField(queryset=Worker.published.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
+    wipers = forms.ModelChoiceField(queryset=Worker.published.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
+    improvement = forms.ModelChoiceField(queryset=Worker.published.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
+    plumber_certificate = forms.ModelChoiceField(queryset=Worker.published.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
+    electrician_certificate = forms.ModelChoiceField(queryset=Worker.published.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
+    networks = forms.ModelChoiceField(queryset=Worker.published.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
+    act = forms.ModelChoiceField(queryset=Worker.published.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
+    deratization = forms.ModelChoiceField(queryset=Worker.published.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
+    pest_control = forms.ModelChoiceField(queryset=Worker.published.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
+    disinfection = forms.ModelChoiceField(queryset=Worker.published.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
+    verification_of_meters = forms.ModelChoiceField(queryset=Worker.published.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
+    SOI_inspection = forms.ModelChoiceField(queryset=Worker.published.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
+    passport = forms.ModelChoiceField(queryset=Worker.published.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
+    intercom_ROST = forms.ModelChoiceField(queryset=Worker.published.all(), empty_label="Исполнитель не выбран", required=False, label="Исполнитель")
+    
+    
     class Meta:
         model = House
         fields = ['name', 'street', 'company',]

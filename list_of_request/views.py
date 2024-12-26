@@ -7,7 +7,7 @@ from rest_framework import generics
 from django.db.models import F
 
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 
 from .permissions import  IsOwnerOrReadOnly
@@ -16,7 +16,7 @@ from list_of_request.serializers import ArticlesSerializer
 
 from .models import  Articles
 from .forms import ArticlesForm
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import Http404, HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.contrib import messages
 
@@ -77,12 +77,7 @@ class ApplicationList(ListView):
     allow_empty = True
     context_object_name = 'content'
     
-    # def get_worker(request):
-    #     if Articles.objects.filter(
-    #         Q(street=House.street) & Q(house=House.name) & Q(type=House.type_application)
-    #     ):
-    #         Articles.worker = House.worker
-    #         return Articles.worker
+
     
     def get_queryset(self):
         return Articles.objects.all().order_by('-id')
@@ -100,26 +95,7 @@ class ApplicationSearchList(FilterView):
         return Articles.objects.all().order_by('-id')
     
 
-    
-    
-    
-        
-    
-    # def list_of_applications(self, **kwargs):
-    #     page = request.GET.get('page', 1)
-    #     content = self.model.order_by('-id')    
-    #     paginator = Paginator(content, 5)
-    #     current_page = paginator.page(int(page))
 
-    #     filter = ApplicationFilter(request.GET, queryset=content)
-    #     current_page = filter.qs
-
-    #     context = {
-    #         "title": "Лист заявок",
-    #         "content": current_page,
-    #         "filter": filter
-    #     }
-    #     return render(request, 'list_of_request/list_of_applications.html', context)
 
 class ApplicationDetail(DetailView):
     model = Articles
@@ -129,52 +105,22 @@ class ApplicationDetail(DetailView):
     
     
 
-
-# def application_detail(request, application_id):
-#     application = Articles.objects.get(pk=application_id)
-#     content = { 
-#         'title': 'Детали заявки',
-#         'application': application
-#     }
-#     return render(request, 'list_of_request/application_detail.html', content)
-
-
-# class ApplicationAddView(View):
-#     def create_application(self, request):
-#         if request.method=="POST":
-#             form = ArticlesForm(request.POST, request.FILES)
-#             if form.is_valid():
-#                 new_app = form.save(commit=False)
-#                 new_app.user = request.user
-#                 new_app.save()
-#                 return HttpResponseRedirect(reverse('list_of_request:applications'))
+def page_not_found(request, exception):
+    return HttpResponseNotFound("<h1>Страница не найдена</h1>")
             
-        
-#         else: form = ArticlesForm()
-#         response_data = {
-#                 "message": "Добавлена новая заявка",
-#                 'cart_items_html': self.render_cart(request)
-#             }
-        
-#         return JsonResponse(response_data)
-        
-    
+def archive(request, year):
+    if year > 2024:
+        return redirect('main')
+    return HttpResponse(f"<h1>Архив заявок по годам</h1><p>{year}</p>")    
         
 def create_application(request):
     if request.method=="POST":
         form = ArticlesForm(request.POST, request.FILES)
-        # worker = Worker.objects.get.filter('name')
-        # type_worker = Worker.objects.get.filter('type_worker')
-        # address = Worker.objects.get.filter('address')
-        # type_application = Articles.objects.get.filter('type')
-        # house = Articles.objects.get.filter('house')
-        # if house == address and type_worker == type_application:
-        #     worker=worker
-        worker = Worker.objects.filter(address=F('articles__house')).values_list('worker', flat=True)#сделать двойную проверку по адресу и типу заявки, прежде чем выбирать worker
+        
+        # worker = Worker.objects.filter(address=F('articles__house')).values_list('worker', flat=True)#сделать двойную проверку по адресу и типу заявки, прежде чем выбирать worker
         if form.is_valid():
             new_app = form.save(commit=False)
             new_app.user = request.user
-            new_app.Worker = worker
             new_app.save()
             messages.success(request, 'Заявка успешно добавлена')
             return HttpResponseRedirect(reverse('list_of_request:applications'))

@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path, re_path
 
+from list_of_request.views import page_not_found
 from ATS.views import CallViewSet
 from rest_framework.routers import DefaultRouter
 
@@ -42,6 +43,8 @@ urlpatterns = [
     re_path(r'^auth/', include('djoser.urls.authtoken')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += router.urls
+
+handler404 = page_not_found
 
 
 

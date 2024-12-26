@@ -4,6 +4,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 from handbook.models import Roles
 
+
 class Userprofile(models.Model):
     user = models.OneToOneField(User, related_name='userprofile', on_delete=models.CASCADE)
     role = models.ForeignKey(to=Roles, null=True, blank=True, verbose_name="Роль", default=None, on_delete=models.PROTECT)

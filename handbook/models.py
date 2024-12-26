@@ -4,7 +4,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-from companies.models import Companies
+from companies.models import Companies, PublishedManager
 
 
 
@@ -33,7 +33,10 @@ class Master(models.Model):
     phone_number = PhoneNumberField('Номер телефона', null=True, blank=True, max_length=18)
     company = models.ForeignKey(Companies, related_name='Мастера', on_delete=models.DO_NOTHING, null=True, blank=True)
     workers = models.ManyToManyField('Worker', related_name='Workers')
-    user = models.OneToOneField(User, on_delete=models.DO_NOTHING, default='0')
+    user = models.OneToOneField(User, on_delete=models.DO_NOTHING)
+    published = PublishedManager()
+    is_active = models.BooleanField('Статус', default=False)
+    
     def __str__(self):
         return self.name
     
@@ -53,6 +56,8 @@ class Worker(models.Model):
     user = models.OneToOneField(User, on_delete=models.DO_NOTHING, null=True, blank=True)
     master = models.ForeignKey(Master, related_name='Мастер', on_delete=models.DO_NOTHING, null=True, blank=True)
     # address = models.ForeignKey('House', on_delete=models.DO_NOTHING, null=True, related_name='Адрес')
+    published = PublishedManager()
+    is_active = models.BooleanField('Статус', default=False)
     
     def __str__(self):
         return self.name 

@@ -21,8 +21,6 @@
 				<th data-resizable-column-id="Телефон">Телефон</th>
                 <th data-resizable-column-id="E-mail">E-mail</th>
                 <th data-resizable-column-id="Информация">Информация</th>
-				<th data-resizable-column-id="СМС мастеру">СМС мастеру</th>
-				<th data-resizable-column-id="СМС исполнителю">СМС исполнителю</th>
                 <th data-resizable-column-id="Статус">Статус</th>
 			</tr>
 			<tr>	
@@ -36,9 +34,7 @@
 					<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.phone_number }}</a></p></td>
 					<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.mail }}</a></p></td>
 					<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.info }}</a></p></td>
-                    <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.sms_master }}</a></p></td>
-                    <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.sms_worker }}</a></p></td>
-                    <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.status }}</a></p></td>
+                    <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.is_active }}</a></p></td>
                     
                 </div>
 			</tr>

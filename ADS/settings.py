@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-w9^g__uhq4hh#kp@3+7w6&(jq@l8a4*l+8&a8z=(z13u5dgl^t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -179,7 +179,7 @@ LOGIN_REDIRECT_URL = '/list_of_request/'
 PHONENUMBER_DB_FORMAT = 'NATIONAL'
 PHONENUMBER_DEFAULT_REGION = 'RU'
 
-#AUTH_USER_MODEL = 'users.User'
+# AUTH_USER_MODEL = 'users.User'
 
 from celery.schedules import crontab
 

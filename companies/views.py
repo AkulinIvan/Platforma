@@ -9,12 +9,21 @@ from companies.forms import CompanyForm
 from .models import Companies
 
 def company(request):
-    content = Companies.objects.all()
+    content = Companies.published.filter(is_active=1)
     context = {
         "title": "Управляющие компании",
         "content": content,
     }
     return render(request, 'companies/companies.html', context)
+
+# class AddCompany(PermissionRequiredMixin, LoginRequiredMixin, DataMixin, CreateView):
+#     form_class =CompanyForm
+#     template_name = 'companies/create_company.html'
+#     title_page = 'Добавление компании'
+    
+#     def form_valid(self, form):
+#         w = form.save(commit=False)
+#         w.
 
 def create_company(request):
     error = ''
