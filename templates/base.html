@@ -73,9 +73,20 @@
                             
                                     </ul>
                                     {% if user.is_authenticated %}
-                                        <li><a class="nav-link dropdown-toggle text-white" href="{% url "list_of_request:create_application" %}">Новая заявка</a>
-                                        <li><a class="nav-link dropdown-toggle text-white" href="{% url "list_of_request:applications" %}">Заявки</a></li>
-                                        <li><a class="nav-link dropdown-toggle text-white" href="{% url "list_of_request:search_application" %}">Поиск заявок</a></li>
+                                        <li><a class="py-2 px-4 rounded-xl btn btn-outline-success text-white" href="{% url "list_of_request:create_application" %}">Новая заявка</a></li>
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle text-white" href="#" role="button"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Заявки🔻
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="nav-link dropdown-toggle text-white" href="{% url "list_of_request:applications" %}">Все заявки</a></li>    
+                                                    <li><a class="nav-link dropdown-toggle text-white" href="{% url "list_of_request:new_applications" %}">Новые Заявки</a></li>
+                                                    <li><a class="nav-link dropdown-toggle text-white" href="{% url "list_of_request:assigned_applications" %}">Назначенные заявки</a></li>
+                                                    <li><a class="nav-link dropdown-toggle text-white" href="{% url "list_of_request:complete_applications" %}">Выполненные заявки</a></li>
+                                                    <li><a class="nav-link dropdown-toggle text-white" href="{% url "list_of_request:search_application" %}">Поиск заявок</a></li>
+                                                </ul>
+                                            </li>
                                         <li><a class="nav-link dropdown-toggle text-white" href="{% url "ATS:call_list" %}">Звонки</a></li>
                                         <li><a class="nav-link dropdown-toggle text-white" href="{% url "handbook:handbook" %}">Справочник</a></li>
                                         {% comment %} <li><a class="nav-link dropdown-toggle text-white" href="{% url "sms:send_sms" %}">Отправить смс</a> {% endcomment %}
@@ -93,13 +104,21 @@
                         <button class="btn btn-outline-success text-white" type="submit">Поиск</button>
                     </form> {% endcomment %}
                 </div>
-                <li class="nav-item dropdown ">
+                <li class="nav-item dropdown">
                     {% if user.is_authenticated %}
-                    <button class="btn btn-outline-success text-white" type="submit">
-                        <a class="nav-link dropdown-toggle" href="{% url "userprofile:logout" %}">Выйти</a></li></button>
+                    <button class="btn btn-outline-danger" type="submit">
+                        <a class="nav-link dropdown-toggle rounded-xl text-wrap" href="{% url "userprofile:logout" %}">Выход</a></li></button>
                     {% endif %}
             </div>
         </nav>
+
+        {% if messages %}
+            <div class="py-6 px-6">
+                {% for message in messages %}
+                    <div class="py-4 px-4 bx-teal-300 text-white rounded-xl">
+                        {{ message }}
+                {% endfor %}
+        {% endif %}
     </header>
     <section>
         

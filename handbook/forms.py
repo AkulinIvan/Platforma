@@ -1,8 +1,8 @@
 from django import forms
 from django.forms import ModelForm
 
-from companies.models import Companies, PublishedManager
-from .models import House, Master, Street, Worker, City, Roles
+from companies.models import Cities, Companies, Master, PublishedManager, Worker
+from .models import House, Street, Roles
 from django.contrib.auth.models import User
 
 
@@ -25,15 +25,15 @@ class WorkersForm(forms.ModelForm):
                     
 
 
-class CityForm(forms.ModelForm):
-    name = forms.TextInput()
-    status = forms.BooleanField()
+# class CityForm(forms.ModelForm):
+#     name = forms.TextInput()
+#     status = forms.BooleanField()
 
     
 
 class StreetForm(forms.ModelForm):
     name = forms.TextInput()
-    city = forms.ModelChoiceField(queryset=City.objects.all(), empty_label="Город не выбран", required=False, label="Город")
+    city = forms.ModelChoiceField(queryset=Cities.objects.all(), empty_label="Город не выбран", required=False, label="Город")
     status = forms.BooleanField()
 
     class Meta:
@@ -60,7 +60,7 @@ class AddMasterForm(forms.ModelForm):
     
     class Meta:
         model = Worker
-        fields = ['name', 'phone_number', 'company', 'user'] 
+        fields = ['name', 'phone_number', 'user'] 
         widgets = {
             "name": forms.TextInput(attrs={
                 'class': 'form-control',
@@ -83,44 +83,44 @@ class AddMasterForm(forms.ModelForm):
         
 
     
-class AddWorkerForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['name'].empty_label = 'Введите имя'
-        self.fields['type_worker'].empty_label = 'Выберите тип заявок'
-        # self.fields['sms'].empty_label = 'Выберите статус смс'
-        self.fields['phone_number'].empty_label = 'Введите номер телефона'
-        # self.fields['company'].empty_label = 'Выберите компанию'
-        self.fields['user'].empty_label = 'Выберите аккаунт исполнителя'
+# class AddWorkerForm(forms.ModelForm):
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.fields['name'].empty_label = 'Введите имя'
+#         self.fields['type_worker'].empty_label = 'Выберите тип заявок'
+#         # self.fields['sms'].empty_label = 'Выберите статус смс'
+#         self.fields['phone_number'].empty_label = 'Введите номер телефона'
+#         # self.fields['company'].empty_label = 'Выберите компанию'
+#         self.fields['user'].empty_label = 'Выберите аккаунт исполнителя'
         
-    class Meta:
-        model = Worker
-        fields = ['name', 'type_worker', 'phone_number', 'user'] 
-        widgets = {
-            "name": forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Имя работника'
-            }),
-            "type_worker": forms.Select(attrs={
-                'class': 'form-control'
-            }),
-            "phone_number": forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Номер телефона'
-            }),
-            # "company": forms.Select(attrs={
-            #     'class': 'form-control'
-            # }),
-            # "sms": forms.BooleanField(attrs={
-            #     'class': 'form-control'
-            # }),
-            "user": forms.Select(attrs={
-                'class': 'form-control'
-            })
-        }
-        def clean(self):
-            cleaned_data = super().clean()
-            return cleaned_data
+#     class Meta:
+#         model = Worker
+#         fields = ['name', 'type_worker', 'phone_number', 'user'] 
+#         widgets = {
+#             "name": forms.TextInput(attrs={
+#                 'class': 'form-control',
+#                 'placeholder': 'Имя работника'
+#             }),
+#             "type_worker": forms.Select(attrs={
+#                 'class': 'form-control'
+#             }),
+#             "phone_number": forms.TextInput(attrs={
+#                 'class': 'form-control',
+#                 'placeholder': 'Номер телефона'
+#             }),
+#             # "company": forms.Select(attrs={
+#             #     'class': 'form-control'
+#             # }),
+#             # "sms": forms.BooleanField(attrs={
+#             #     'class': 'form-control'
+#             # }),
+#             "user": forms.Select(attrs={
+#                 'class': 'form-control'
+#             })
+#         }
+#         def clean(self):
+#             cleaned_data = super().clean()
+#             return cleaned_data
         
 class HouseForm(forms.ModelForm):
     name = forms.TextInput()

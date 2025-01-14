@@ -1,15 +1,29 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-
+from django import template
+from django.contrib.auth.decorators import login_required
 from companies.forms import CompanyForm
-
+from django.views.generic.detail import DetailView
 
 from .models import Companies
+register = template.Library()
 
+
+
+class CompanyDetail(DetailView):
+    model = Companies
+    template_name = 'companies/show_company.html'
+    pk_url_kwarg = 'company_id'
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Companies.objects.filter(created_by=self.request.user)
+        else:
+            return Companies.objects.none() 
+@login_required    
 def company(request):
-    content = Companies.published.filter(is_active=1)
+    content = Companies.published.filter(created_by=request.user)
     context = {
         "title": "Управляющие компании",
         "content": content,
@@ -24,7 +38,7 @@ def company(request):
 #     def form_valid(self, form):
 #         w = form.save(commit=False)
 #         w.
-
+@login_required 
 def create_company(request):
     error = ''
     if request.method=="POST":

@@ -6,7 +6,8 @@ from django.urls import reverse, reverse_lazy
 from django.contrib.auth.views import LoginView
 from django.contrib import auth, messages
 
-from list_of_request.models import Articles
+from userprofile.models import Userprofile
+
 from .forms import LoginUserForm
 
 
@@ -16,8 +17,7 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            
-            
+            Userprofile.objects.create(user=user)
             return redirect('userprofile:login')
     else:
         form = UserCreationForm(request.POST)

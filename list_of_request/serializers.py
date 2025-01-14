@@ -16,7 +16,7 @@ class ArticlesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Articles
         #fields = ("__all__")
-        fields = ('create_time', 'street', 'house', 'flat', 'text', 'phone', 'fio', 'job_date',  'view', 'type',  'application_status',
+        fields = ('create_time', 'street', 'house', 'flat', 'text', 'phone', 'fio', 'job_date',  'view', 'type',  'status',
                     'nomer', 'povtornaya', 'company', 'master', 'worker', 'dezh_worker', 'comment', 'end_date', 'call_record', 'voice_record', 
                     'user', 'record_status', 'new_sms', 'sms_master', 'sms_about_worker', 'sms_worker', 'sms_complete', 'sms_dezh_worker', 
                     'materials', 'files')

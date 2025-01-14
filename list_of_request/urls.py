@@ -12,14 +12,22 @@ register_converter(converters.FourDigitYearConverter, 'year4')
 # print(router.urls)
 
 urlpatterns = [
-    path('', views.ApplicationList.as_view(), name='applications'),
-    path('application/<int:application_id>/', views.ApplicationDetail.as_view(), name='application'),
+    path('', views.list_applications, name='applications'),
+    path('new-application/', views.new_applications_list, name='new_applications'),
+    path('<int:pk>/', views.ApplicationDetail.as_view(), name='application'),
     path('create/', views.create_application, name='create_application'),
     path('search/', views.ApplicationSearchList.as_view(), name='search_application'),
-    path('archive/<year4:year>/', views.archive, name='archive'),
-    path('api/v1/applications/', views.ArticlesAPIList.as_view()),
-    path('api/v1/applications/<int:pk>/', views.ArticlesAPIUpdate.as_view()),
-    path('api/v1/applicationsdelete/<int:pk>/', views.ArticlesAPIDestroy.as_view()),
+    path('<int:pk>/delete/', views.application_delete, name='delete_application'),
+    path('<int:pk>/edit/', views.application_edit, name='edit_application'),
+    path('<int:pk>/convert/', views.convert_to_complete_application, name='convert_application'),
+    path('complete-applications/', views.complete_applications, name='complete_applications'),
+    path('complete-applications/<int:pk>/', views.ApplicationCompleteDetail.as_view(), name='detail_complete_application'),
+    path('assigned-applications/', views.AssignedApplicationList.as_view(), name='assigned_applications'),
+    path('assigned-applications/<int:pk>/', views.ApplicationAssignDetail.as_view(), name='detail_assigned_applications'),
+    # path('archive/<year4:year>/', views.archive, name='archive'),
+    # path('api/v1/applications/', views.ArticlesAPIList.as_view()),
+    # path('api/v1/applications/<int:pk>/', views.ArticlesAPIUpdate.as_view()),
+    # path('api/v1/applicationsdelete/<int:pk>/', views.ArticlesAPIDestroy.as_view()),
     #path('api/v1/', include(router.urls))
     
     

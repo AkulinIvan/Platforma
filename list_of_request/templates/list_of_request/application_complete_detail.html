@@ -28,11 +28,11 @@
     </table>
     <hr class="my-4">
     {% if user.is_admin or user.is_staff %}
-    <a href=" {% url "list_of_request:convert_application" object.id %}" class="py-2 px-4 rounded-xl btn btn-outline-success">РћС‚РјРµС‚РёС‚СЊ Р·Р°СЏРІРєСѓ РєР°Рє РІС‹РїРѕР»РЅРµРЅРЅСѓСЋ</a>
-    <a href=" {% url "list_of_request:edit_application" object.id %}" class="py-2 px-4 rounded-xl btn btn-outline-success">РР·РјРµРЅРёС‚СЊ Р·Р°СЏРІРєСѓ</a>
-    <a href=" {% url "list_of_request:delete_application" object.id %}" class="py-2 px-4 rounded-xl btn btn-outline-danger">РЈРґР°Р»РёС‚СЊ Р·Р°СЏРІРєСѓ</a>
+    
+    {% comment %} <a href=" {% url "list_of_request:edit_application" object.id %}" class="py-2 px-4 rounded-xl btn btn-outline-success">Изменить заявку</a> {% endcomment %}
+    {% comment %} <a href=" {% url "list_of_request:delete_application" object.id %}" class="py-2 px-4 rounded-xl btn btn-outline-danger">Удалить заявку</a> {% endcomment %}
     <hr class="my-4">{% endif %}
-<a href=" {% url "list_of_request:applications" %}" class="py-2 px-4 rounded-xl btn btn-outline-success">Р’РµСЂРЅСѓС‚СЊСЃСЏ Рє СЃРїРёСЃРєСѓ Р·Р°СЏРІРѕРє</a>
+{% comment %} <a href=" {% url "list_of_request:applications" %}" class="py-2 px-4 rounded-xl btn btn-outline-success">Вернуться к списку заявок</a> {% endcomment %}
     </div>  
 </div>
 
@@ -42,7 +42,7 @@
 {% block footer %}
 <footer class="py-4 bg-dark">
     <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; РђРІР°СЂРёР№РЅРѕ-РґРёСЃРїРµС‡РµСЂСЃРєР°СЏ СЃР»СѓР¶Р±Р° 2024</p>
+        <p class="m-0 text-center text-white">Copyright &copy; Аварийно-диспечерская служба 2024</p>
     </div>
 </footer>
 {% endblock  %} 

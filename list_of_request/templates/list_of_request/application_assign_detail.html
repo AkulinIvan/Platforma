@@ -28,9 +28,9 @@
     </table>
     <hr class="my-4">
     {% if user.is_admin or user.is_staff %}
-    <a href=" {% url "list_of_request:convert_application" object.id %}" class="py-2 px-4 rounded-xl btn btn-outline-success">Отметить заявку как выполненную</a>
-    <a href=" {% url "list_of_request:edit_application" object.id %}" class="py-2 px-4 rounded-xl btn btn-outline-success">Изменить заявку</a>
-    <a href=" {% url "list_of_request:delete_application" object.id %}" class="py-2 px-4 rounded-xl btn btn-outline-danger">Удалить заявку</a>
+    
+    <a href="#" class="py-2 px-4 rounded-xl btn btn-outline-success">Изменить заявку</a>
+    <a href="#" class="py-2 px-4 rounded-xl btn btn-outline-danger">Удалить заявку</a>
     <hr class="my-4">{% endif %}
 <a href=" {% url "list_of_request:applications" %}" class="py-2 px-4 rounded-xl btn btn-outline-success">Вернуться к списку заявок</a>
     </div>  

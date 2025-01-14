@@ -22,10 +22,18 @@ class ArticlesForm(forms.ModelForm):
     class Meta:
         model = Articles
         fields = ['create_time', 'fio', 'phone', 'text', 'street', 'house', 'flat', 'materials', 'files', 'comment', 'view', 
-                'type', 'company', 'master', 'worker']
+                'type', 'company', 'master', 'worker', 'priority', 'status']
         
 
         widgets = {
+            "priority": forms.Select(attrs={
+                'class': 'form-control',
+                'placeholder': 'Приоритет заявки'
+            }),
+            "status": forms.Select(attrs={
+                'class': 'form-control',
+                'placeholder': 'Статус заявки'
+            }),
             "create_time": forms.DateTimeInput(attrs={
                 'class': 'form-control'
             }),

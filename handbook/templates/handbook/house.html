@@ -8,16 +8,17 @@
 
 {% block content %}
 {% csrf_token %}
+
 <h5 class="m-2"><strong>{{ title }}</strong></h5>
 	<ul>
 		<table class="table table-bordered" data-resizable-columns-id="demo-table">
 			<tr>
+				<th data-resizable-column-id="Улица">Улица</th>
 				<th data-resizable-column-id="Номер дома">Номер дома</th>
-                <th data-resizable-column-id="Улица">Улица</th>
 				<th data-resizable-column-id="Управляющая компания">Управляющая компания</th>
-                <th data-resizable-column-id="Статус">Статус</th>
-				<th data-resizable-column-id="Сантехника">Сантехника</th>
-				<th data-resizable-column-id="Номер дома">Электрика</th>
+                <th data-resizable-column-id="Мастер">Мастер</th>
+				<th data-resizable-column-id="Исполнители">Исполнители</th>
+				{% comment %} <th data-resizable-column-id="Электрика">Электрика</th>
                 <th data-resizable-column-id="Плотники">Плотники</th>
 				<th data-resizable-column-id="Уборщицы">Уборщицы</th>
                 <th data-resizable-column-id="Дворники">Дворники</th>
@@ -32,19 +33,22 @@
                 <th data-resizable-column-id="Поверка счетчиков">Поверка счетчиков</th>
 				<th data-resizable-column-id="Осмотр СОИ">Осмотр СОИ</th>
 				<th data-resizable-column-id="Паспортный">Паспортный</th>
-				<th data-resizable-column-id="Домофон РОСТ">Домофон РОСТ</th>
+				<th data-resizable-column-id="Домофон РОСТ">Домофон РОСТ</th> {% endcomment %}
             </tr>
 			<tr>	
 				
 				{% for c in content %}
                 
 					<div class="mt-6 flex justify-content-between">
-                        <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.name }}</a></p></td>
 						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.street }}</a></p></td>
+                        <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.name }}</a></p></td>
                         <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.company }}</a></p></td>
-						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.status }}</a></p></td>
-                        <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.plumbing }}</a></p></td>
-						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.electrician }}</a></p></td>
+						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.master }}</a></p></td>
+						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">
+						{% for w in c.worker.all %}<h6 class="mb-4 text-xl"> {{ w }} </h6>{% endfor %}</p></td>
+
+                        
+						{% comment %} <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.electrician }}</a></p></td>
 						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.carpenter }}</a></p></td>
                         <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.cleaners }}</a></p></td>
 						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.wipers }}</a></p></td>
@@ -59,12 +63,13 @@
                         <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.verification_of_meters }}</a></p></td>
 						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.SOI_inspection }}</a></p></td>
                         <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.passport }}</a></p></td>
-						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.intercom_ROST }}</a></p></td>
+						<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.intercom_ROST }}</a></p></td> {% endcomment %}
 					</div>
 			</tr>
 				{% endfor %}
-		</table>
 
+		</table>
+		
     </ul>
 
 {% endblock  %}

@@ -15,7 +15,7 @@ urlpatterns = [
     path('view_application/', views.view_application, name='view_application'),
     path('status_application/', views.status_application, name='status_application'),
     path('executors/', views.executor, name='executor'),
-    path('executors/add', views.executor_add, name='add_executor'),
+    # path('executors/add', views.executor_add, name='add_executor'),
     path('masters/', views.master, name='master'),
     path('masters/add', views.master_add, name='add_master'),
 ]

@@ -2,15 +2,17 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib import messages
-from companies.models import Companies
+from django.contrib.auth.decorators import login_required
 
-from .forms import AddMasterForm, AddWorkerForm, HouseForm, StreetForm
+from companies.models import Cities, Companies, Master, Worker
 
-from .models import City, House, Master, Status_application, Street, Type_application, Usernames, View_application, Worker
+from .forms import AddMasterForm, HouseForm, StreetForm
+
+from .models import  House, Status_application, Street, Type_application, Usernames, View_application
 
 
 
-
+@login_required 
 def handbook(request):
     context = {
         "title": "Справочник",
@@ -20,9 +22,9 @@ def handbook(request):
 
 
 
-
+@login_required 
 def city(request):
-    content = City.objects.all()
+    content = Cities.objects.all()
     context = {
         "title": "Города",
         "content": content,
@@ -31,7 +33,7 @@ def city(request):
 
 
 
-
+@login_required 
 def street(request):
     content = Street.objects.all()
     context = {
@@ -40,6 +42,7 @@ def street(request):
     }
     return render(request, 'handbook/street.html', context)
 
+@login_required 
 def create_street(request):
     error = ''
     if request.method=="POST":
@@ -62,7 +65,7 @@ def create_street(request):
     
     return render(request, 'handbook/create_street.html', data)
 
-
+@login_required 
 def house(request):
     content = House.objects.all()
     context = {
@@ -71,6 +74,7 @@ def house(request):
     }
     return render(request, 'handbook/house.html', context)
 
+@login_required 
 def create_house(request):
     error = ''
     if request.method=="POST":
@@ -95,7 +99,7 @@ def create_house(request):
 
 
 
-
+@login_required 
 def type_application(request):
     content = Type_application.objects.all()
     context = {
@@ -106,7 +110,7 @@ def type_application(request):
 
 
 
-
+@login_required 
 def view_application(request):
     content = View_application.objects.all()
     context = {
@@ -117,7 +121,7 @@ def view_application(request):
 
 
 
-
+@login_required 
 def status_application(request):
     content = Status_application.objects.all()
     context = {
@@ -128,37 +132,37 @@ def status_application(request):
 
 
 
-
+@login_required 
 def executor(request):
-    content = Worker.objects.all()
+    content = Worker.published.all()
     context = {
         "title": "Исполнители",
         "content": content,
     }
     return render(request, 'handbook/executor.html', context)
 
-def executor_add(request):
-    if request.method == 'POST':
-        form = AddWorkerForm(request.POST)
+# def executor_add(request):
+#     if request.method == 'POST':
+#         form = AddWorkerForm(request.POST)
         
-        if form.is_valid():
-            company = Companies.objects.filter(created_by=request.user)[0]
-            executor = form.save(commit=False)
-            executor.user = request.user
-            executor.company = company
-            executor.save()
+#         if form.is_valid():
+#             company = Companies.objects.filter(created_by=request.user)[0]
+#             executor = form.save(commit=False)
+#             executor.user = request.user
+#             executor.company = company
+#             executor.save()
             
-            messages.success(request, 'Исполнитель успешно добавлен.')
+#             messages.success(request, 'Исполнитель успешно добавлен.')
             
-            return HttpResponseRedirect(reverse('handbook:executor'))
-    else:
-        form = AddWorkerForm()
+#             return HttpResponseRedirect(reverse('handbook:executor'))
+#     else:
+#         form = AddWorkerForm()
             
-    return render(request, 'handbook/worker_add.html', {
-        'form': form})
-
+#     return render(request, 'handbook/worker_add.html', {
+#         'form': form})
+@login_required 
 def master(request):
-    content = Master.objects.all()
+    content = Master.published.all()
     context = {
         "title": "Мастера",
         "content": content,
@@ -167,6 +171,7 @@ def master(request):
     }
     return render(request, 'handbook/master.html', context)
 
+@login_required 
 def master_add(request):
     if request.method == 'POST':
         form = AddMasterForm(request.POST)
@@ -184,7 +189,7 @@ def master_add(request):
             
             return HttpResponseRedirect(reverse('handbook:add_master'))
     else:
-        form = AddWorkerForm()
+        form = AddMasterForm()
             
     return render(request, 'handbook/master_add.html', {
         'form': form})

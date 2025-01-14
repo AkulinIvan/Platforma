@@ -9,7 +9,7 @@ class ArticlesFilter(django_filters.FilterSet):
     end_date = DateFilter(field_name="create_time", lookup_expr='lte')
     class Meta:
         model = Articles
-        fields = ('create_time', 'street', 'house', 'flat', 'text', 'phone', 'fio', 'view', 'type', 'application_status',
+        fields = ('create_time', 'street', 'house', 'flat', 'text', 'phone', 'fio', 'view', 'type', 'status',
                     'povtornaya', 'company', 'master', 'worker', 'dezh_worker', 'user')
         exclude = ['user', 'create_time']
 
