@@ -76,36 +76,39 @@ from django.http import Http404
 
 @login_required
 def new_applications_list(request):
+    page = request.GET.get('page', 1)
     applications = Articles.objects.filter(user=request.user, converted_to_complete=False).order_by('-id')
-    # paginator = Paginator(applications, 1, error_messages={"no_results": "Page does not exist"},)
-    # page=1
-    # current_page = paginator.page(int(page))
+    paginator = Paginator(applications, 4)
+    current_page = paginator.page(int(page))
     context = {
         "title": "Список новых заявок",
-        "content": applications,
+        "content": current_page,
         
     }
     return render(request, 'list_of_request/new_applications.html', context)
 
-@login_required    
+@login_required  
 def list_applications(request):
-    content = Articles.objects.filter(user=request.user)
+    page = request.GET.get('page', 1)
+    content = Articles.objects.filter(user=request.user).order_by('-id')
+    paginator = Paginator(content, 4)
+    current_page = paginator.page(int(page))
     context = {
-        "title": "Все заявки",
-        "content": content,
+        "title": "Список заявок",
+        "content": current_page,
     }
     return render(request, 'list_of_request/list_of_applications.html', context)
 
 
-
 @login_required
 def complete_applications(request):
+    page = request.GET.get('page', 1)
     complete_applications = Articles.objects.filter(user=request.user, converted_to_complete=True).order_by('-id')
-    # paginator = Paginator(applications, 3)
-    # current_page = paginator.page(int(page))
+    paginator = Paginator(complete_applications, 4)
+    current_page = paginator.page(int(page))
     context = {
         "title": "Список выполненных заявок",
-        "content": complete_applications,
+        "content": current_page,
     }
     return render(request, 'list_of_request/complete_applications.html', context)
 
