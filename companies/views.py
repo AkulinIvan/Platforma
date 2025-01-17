@@ -4,10 +4,13 @@ from django.shortcuts import render
 from django.urls import reverse
 from django import template
 from django.contrib.auth.decorators import login_required
+from django_tables2 import RequestConfig, SingleTableView
+from sqlalchemy import table
 from companies.forms import CompanyForm
 from django.views.generic.detail import DetailView
+import django_tables2 as tables
 
-from .models import Companies
+from .models import Companies, CompanyTable
 register = template.Library()
 
 
@@ -21,14 +24,31 @@ class CompanyDetail(DetailView):
             return Companies.objects.filter(created_by=self.request.user)
         else:
             return Companies.objects.none() 
-@login_required    
+# @login_required    
+# def company(request):
+#     content = Companies.published.filter(created_by=request.user)
+#     context = {
+#         "title": "Управляющие компании",
+#         "content": content,
+#     }
+#     return render(request, 'companies/companies.html', context)
+# class SomeTable(tables.Table):
+
+#     class Meta:
+#         model= Companies
+#         attrs = {"class": "paleblue"}
+        
+# class SomeTableView(SingleTableView):  # <-- check for SingleTableView
+#     model = Companies
+#     template_name = 'companies/companies.html'
+#     table_class = SomeTable
+    
+@login_required
 def company(request):
-    content = Companies.published.filter(created_by=request.user)
-    context = {
-        "title": "Управляющие компании",
-        "content": content,
-    }
-    return render(request, 'companies/companies.html', context)
+    table = CompanyTable(Companies.published.filter(created_by=request.user))
+    RequestConfig(request).configure(table)
+    return render(request, 'companies/companies.html', {'table': table})
+    
 
 # class AddCompany(PermissionRequiredMixin, LoginRequiredMixin, DataMixin, CreateView):
 #     form_class =CompanyForm
@@ -59,4 +79,4 @@ def create_company(request):
         'error': error
     }
     
-    return render(request, 'handbook/create_company.html', data)
+    return render(request, 'companies/create_company.html', data)

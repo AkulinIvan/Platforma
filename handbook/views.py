@@ -67,7 +67,7 @@ def create_street(request):
 
 @login_required 
 def house(request):
-    content = House.objects.all()
+    content = House.objects.filter(created_by=request.user)
     context = {
         "title": "Дома",
         "content": content,

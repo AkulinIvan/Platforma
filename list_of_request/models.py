@@ -7,6 +7,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy
+import django_tables2 as tables
+
 
 from companies.models import Companies, Master, Worker
 from handbook.models import Dezh_Worker, House, Street, Type_application, View_application
@@ -107,9 +109,21 @@ class Articles(models.Model):
         
     def __str__(self):
         return f"Заявка №{self.id} для {self.text}"
+
+
+class ApplicationTable(tables.Table):
+    '''
+Таблица в которой выведены все заявки
+''' 
+    id=tables.LinkColumn("list_of_request:application", args=[tables.A("pk")])
     
-    
-    
+    class Meta:
+        model = Articles
+        # add class="paleblue" to <table> tag
+        attrs = {'class': 'paleblue'}    
+
+
+
 # class Application_complete(models.Model):
 #     create_time = models.DateTimeField(verbose_name='Дата создания заявки', default=datetime.now())
 #     street = models.ForeignKey(to=Street,  on_delete=models.PROTECT, null=True, blank=True, verbose_name="Улица")

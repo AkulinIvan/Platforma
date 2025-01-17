@@ -22,8 +22,10 @@ urlpatterns = [
     path('<int:pk>/convert/', views.convert_to_complete_application, name='convert_application'),
     path('complete-applications/', views.complete_applications, name='complete_applications'),
     path('complete-applications/<int:pk>/', views.ApplicationCompleteDetail.as_view(), name='detail_complete_application'),
-    path('assigned-applications/', views.AssignedApplicationList.as_view(), name='assigned_applications'),
+    path('assigned-applications/', views.assigned_applications, name='assigned_applications'),
     path('assigned-applications/<int:pk>/', views.ApplicationAssignDetail.as_view(), name='detail_assigned_applications'),
+    
+    # path('export-applications/', views.table_view, name='export_url'),
     # path('archive/<year4:year>/', views.archive, name='archive'),
     # path('api/v1/applications/', views.ArticlesAPIList.as_view()),
     # path('api/v1/applications/<int:pk>/', views.ArticlesAPIUpdate.as_view()),

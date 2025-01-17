@@ -142,6 +142,7 @@ class House(models.Model):
     company = models.ForeignKey(Companies, on_delete=models.DO_NOTHING, null=True)
     master = models.ForeignKey(Master, on_delete=models.DO_NOTHING, null=True)
     worker = models.ManyToManyField(Worker)
+    created_by = models.ForeignKey(User, on_delete=models.PROTECT, null=True, blank=True)
     status = models.BooleanField('Статус', default=False)
     
     # plumbing = models.ForeignKey('Worker', blank=True, on_delete=models.DO_NOTHING, null=True, related_name='Сантехника')

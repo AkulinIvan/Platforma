@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load bootstrap4 %}
 {%load static %}
 
 {% block css %}
@@ -12,10 +13,12 @@
         <h1>Создать новую компанию</h1>
         <form method="post">
             {% csrf_token %}
-            {% crispy form %}
+            {% bootstrap_form form %}
             
             <span>{{ error }}</span>
-            <button class="btn btn-info"><i class="fas fa-plus-circle">Создать</button>
+            {% buttons %}
+            <button type="submit" class="btn btn-primary"> Сохранить </button>
+            {% endbuttons %}
             </form>
             
         </div>

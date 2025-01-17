@@ -1,50 +1,36 @@
 {% extends "handbook/handbook.html" %}
 {%load static %}
-
+{% load render_table from django_tables2 %}
 {% block css %}
     <link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">
 	<link rel="stylesheet" href="{% static "deps/css/table.css" %}">
+    <link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}">
 {% endblock  %}
 
 {% block content %}
-
-{% comment %} <li><a class="dropdown-item text-black" href="{% url "handbook:create_company" %}">Новая компания</a></li> {% endcomment %}
+<li><a href="{% url "companies:create_company" %}" class="py-2 px-4 rounded-xl btn btn-outline-success">Добавить компанию</a></li>
 {% csrf_token %}
 
 <h5 class="m-2"><strong>{{ title }}</strong></h5>
-	<ul>
+{% render_table table %}
+
+					
+                    
+	{% comment %} <ul>
 		<table class="table table-bordered" data-resizable-columns-id="demo-table">
 			<tr>
 				<th data-resizable-column-id="Название">Название</th>
-				{% comment %} <th data-resizable-column-id="Город">Город</th>
-                <th data-resizable-column-id="Участники">Сотрудники</th>
-				<th data-resizable-column-id="Телефон">Телефон</th>
-                <th data-resizable-column-id="E-mail">E-mail</th>
-                <th data-resizable-column-id="Информация">Информация</th>
-                <th data-resizable-column-id="Статус">Статус</th>
-                <th data-resizable-column-id="Дата создания">Дата создания</th> {% endcomment %}
 			</tr>
 			<tr>	
             {% for c in content %}
                 <div class="mt-6 flex justify-content-between">
 					<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}"><a href={{c.get_absolute_url}}>{{ c.name }}</a></p></td>
-					{% comment %} <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.city }}</a></p></td>
-                    <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.master.all }}</a></p></td>
-                    <td>{% for member in c.members.all %}
-                        <p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ member }}</a></p>{% endfor %}
-                    </td>
-					<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.phone_number }}</a></p></td>
-					<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.mail }}</a></p></td>
-					<td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.info }}</a></p></td>
-                    <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.is_active }}</a></p></td>
-                    <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.created_at }}</a></p></td> {% endcomment %}
-                    
                 </div>
 			</tr>
 				{% endfor %}
 		</table>
-
-    </ul>
+        
+    </ul> {% endcomment %}
 
 
 

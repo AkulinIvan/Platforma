@@ -1,5 +1,6 @@
 from django.views import View
 from django.core.paginator import Paginator
+from django_tables2 import LazyPaginator, RequestConfig, SingleTableView
 
 from companies.models import Companies
 from .mixins import ApplicationMixin
@@ -18,7 +19,7 @@ from .permissions import  IsOwnerOrReadOnly
 
 from list_of_request.serializers import ArticlesSerializer
 
-from .models import Articles
+from .models import ApplicationTable, Articles
 from .forms import ArticlesForm
 from django.http import Http404, HttpResponse, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
 from django.urls import reverse, reverse_lazy
@@ -27,7 +28,13 @@ from django.views.generic import UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.db.models import Q
+
+import django_tables2 as tables
+from django_tables2.export.views import ExportMixin
+from django_tables2.config import RequestConfig
+from django_tables2.export.export import TableExport
+
 # class ArticlesViewSet(viewsets.ModelViewSet):
 #     #queryset = Articles.objects.all()
 #     serializer_class = ArticlesSerializer  
@@ -77,7 +84,7 @@ from django.http import Http404
 @login_required
 def new_applications_list(request):
     page = request.GET.get('page', 1)
-    applications = Articles.objects.filter(user=request.user, converted_to_complete=False).order_by('-id')
+    applications = Articles.objects.filter(user=request.user).filter(Q(status='NEW')).order_by('-id')
     paginator = Paginator(applications, 4)
     current_page = paginator.page(int(page))
     context = {
@@ -87,23 +94,45 @@ def new_applications_list(request):
     }
     return render(request, 'list_of_request/new_applications.html', context)
 
+
 @login_required  
 def list_applications(request):
-    page = request.GET.get('page', 1)
-    content = Articles.objects.filter(user=request.user).order_by('-id')
-    paginator = Paginator(content, 4)
-    current_page = paginator.page(int(page))
+    
+    table = ApplicationTable(Articles.objects.filter(user=request.user).order_by('-id'))
+    # RequestConfig(request, paginate={"per_page": 25}).configure(table)
+    table.paginate(page=request.GET.get("page", 1), per_page=25)
+    # paginator = Paginator(table, 4)
+    # current_page = paginator.page(int(page))
     context = {
         "title": "Список заявок",
-        "content": current_page,
+        "table": table,
     }
     return render(request, 'list_of_request/list_of_applications.html', context)
 
+def table_view(request):
+    table = ApplicationTable(Articles.objects.all())
+
+    RequestConfig(request).configure(table)
+
+    export_format = request.GET.get("_export", None)
+    if TableExport.is_valid_format(export_format):
+        exporter = TableExport(export_format, table)
+        return exporter.response(f"table.{export_format}")
+
+    return render(request, 'list_of_request/list_of_applications.html', {
+        "table": table
+    })
+
+class TableView(ExportMixin, tables.SingleTableView):
+    table_class = ApplicationTable
+    model = Articles
+    export_formats = ['csv',]
+    template_name = "list_of_request/list_of_applications.html"
 
 @login_required
 def complete_applications(request):
     page = request.GET.get('page', 1)
-    complete_applications = Articles.objects.filter(user=request.user, converted_to_complete=True).order_by('-id')
+    complete_applications = Articles.objects.filter(user=request.user).filter(Q(status='COMPLETED')).order_by('-id')
     paginator = Paginator(complete_applications, 4)
     current_page = paginator.page(int(page))
     context = {
@@ -112,25 +141,15 @@ def complete_applications(request):
     }
     return render(request, 'list_of_request/complete_applications.html', context)
 
-class AssignedApplicationList(ListView):
-    template_name = 'list_of_request/assigned_applications.html'
-    model = Articles
-    paginate_by = 5
-    context_object_name = 'assigned_applications'
-    allow_empty = True
-    def get_queryset(self):
-        context = Articles.objects.filter(user=self.request.user).order_by('-id')
-        return context
-
-
 @login_required
 def assigned_applications(request):
-    assigned_applications = Articles.objects.filter(user=request.user, status='Назначена').order_by('-id')
-    # paginator = Paginator(applications, 3)
-    # current_page = paginator.page(int(page))
+    page = request.GET.get('page', 1)
+    assigned_applications = Articles.objects.filter(user=request.user).filter(Q(status='ASSIGNED')).order_by('-id')
+    paginator = Paginator(assigned_applications, 4)
+    current_page = paginator.page(int(page))
     context = {
         "title": "Список назначенных заявок",
-        "content": assigned_applications,
+        "content": current_page,
     }
     return render(request, 'list_of_request/assigned_applications.html', context)
 
@@ -143,20 +162,20 @@ def application_detail(request, pk):
     }
     return render(request, 'list_of_request/application_detail.html', context)
 
-
-
-# class ApplicationList(ListView):
-#     model = Articles
-#     context_object_name = 'applications_list'
-#     template_name = 'list_of_request/list_of_applications.html'
-#     paginate_by = 3
-#     allow_empty = True
-#     context_object_name = 'content'
+# @login_required  
+# def list_applications(request):
     
-#     def get_queryset(self, request):
-#         return Articles.objects.filter(user=request.user).order_by('-id')
-        
+#     table = ApplicationTable(Articles.objects.filter(user=request.user).order_by('-id'))
+#     RequestConfig(request, paginate={"per_page": 25}).configure(table)
     
+#     # paginator = Paginator(table, 4)
+#     # current_page = paginator.page(int(page))
+#     context = {
+#         "title": "Список заявок",
+#         "table": table,
+#     }
+#     return render(request, 'list_of_request/list_of_applications.html', context)
+
 class ApplicationSearchList(FilterView):
     model = Articles
     context_object_name = 'applications_list'
@@ -253,7 +272,6 @@ def create_application(request):
     if request.method=="POST":
         form = ArticlesForm(request.POST, request.FILES)
         
-        # worker = Worker.objects.filter(address=F('articles__house')).values_list('worker', flat=True)#сделать двойную проверку по адресу и типу заявки, прежде чем выбирать worker
         if form.is_valid():
             new_app = form.save(commit=False)
             new_app.user = request.user

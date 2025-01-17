@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import User
-
+import django_tables2 as tables
 
 class Type_application(models.Model):
     name = models.CharField('Тип заявки', max_length=50)
@@ -88,7 +88,6 @@ class Companies(models.Model):
     is_active = models.BooleanField('Статус', choices=Status.choices, default=Status.ENABLED)
     master = models.ForeignKey(Master, null=True, blank=True, on_delete=models.PROTECT, related_name='Мастер')
     worker = models.ManyToManyField(Worker)
-    members = models.ManyToManyField(User)
     published = PublishedManager()
     objects = models.Manager()
     
@@ -103,3 +102,11 @@ class Companies(models.Model):
         verbose_name = 'Компанию'
         verbose_name_plural = 'Компании'
         ordering = ("id",)
+
+
+class CompanyTable(tables.Table):
+    name=tables.LinkColumn("companies:show_company", args=[tables.A("pk")])
+    class Meta:
+        model = Companies
+        # add class="paleblue" to <table> tag
+        # attrs = {'class': 'paleblue'}

@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'sms_app',
     'companies',
     
+    'django_tables2',
     'phonenumber_field',
     'rest_framework',
     'twilio',
@@ -216,4 +217,11 @@ REST_FRAMEWORK = {
     ],
 }
 
+
+DJANGO_TABLES2_TABLE_ATTRS = {
+    'class': 'table table-hover',
+    'thead': {
+        'class': 'table-light',
+    },
+}
 
