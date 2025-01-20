@@ -59,10 +59,17 @@ INSTALLED_APPS = [
     'django_filters',
     'widget_tweaks',
     'bootstrap4',
+    'webpush',
     
 ]
 
+AUTH_PASSWORD_VALIDATORS = ["ivanakulin175@gmail.com"]
 
+WEBPUSH_SETTINGS = {
+"VAPID_PUBLIC_KEY": "BOIJJGpbzb2QGo6fppVU7tpcDsSOJzOs4OiF0NRdlTIG-fjfI1UQkNsQAUCu2-syiQNs63lrVSjx_bL45JALYK0",
+"VAPID_PRIVATE_KEY": "TIDj0YArll9sPZy2Qw0hB6m9iag73oW_Jr2Au0b3xHY",
+"VAPID_ADMIN_EMAIL": "ivanakulin175@gmail.com"
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

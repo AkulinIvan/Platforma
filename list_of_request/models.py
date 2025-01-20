@@ -115,13 +115,21 @@ class ApplicationTable(tables.Table):
     '''
 Таблица в которой выведены все заявки
 ''' 
+    class PriorityColumn(tables.Column):
+        def render(self, value):
+            if value == 'аварийная':
+                self.attrs = {"td": {"bgcolor": "FF3333"}}
+            return value
     id=tables.LinkColumn("list_of_request:application", args=[tables.A("pk")])
+    priority  = PriorityColumn()
     
     class Meta:
         model = Articles
         # add class="paleblue" to <table> tag
-        attrs = {'class': 'paleblue'}    
+        attrs = {'class': 'paleblue'}
+        
 
+    
 
 
 # class Application_complete(models.Model):

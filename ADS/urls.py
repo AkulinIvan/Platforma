@@ -21,6 +21,7 @@ from list_of_request.views import page_not_found
 from ATS.views import CallViewSet
 from rest_framework.routers import DefaultRouter
 
+
 router = DefaultRouter()
 router.register(r'calls', CallViewSet)
 from django.conf import settings
@@ -38,13 +39,16 @@ urlpatterns = [
     path('company/', include('companies.urls', namespace='company')),
     path('calls/', include('ATS.urls', namespace='ATS')),
     path('api/v1/drf-auth/', include('rest_framework.urls')),
-    # path('sms/', include('sms_app.urls', namespace='sms')),
+    path('sms/', include('sms_app.urls', namespace='sms')),
     path('api/v1/auth/', include('djoser.urls')),
+    
     re_path(r'^auth/', include('djoser.urls.authtoken')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += router.urls
 
+
 handler404 = page_not_found
+
 
 
 

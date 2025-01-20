@@ -9,24 +9,28 @@
 {% endblock  %}
 
 {% block content %}
-
+    
     <table class="table table-bordered" data-resizable-columns-id="demo-table">
-        
-    <h3 class="mb-4 text-xl">{{ object.name }}</h3>
-    <h3 class="mb-4 text-xl">{{ object.city }}</h3>
+    <h4 class="mb-4 text-xl">Компания: {{ object.name }}</h4>
+    <h3 class="mb-4 text-xl">Город: {{ object.city }}</h3>
     <h3 class="mb-4 text-xl">Мастер:</h3>
         <h6 class="mb-4 text-xl"> {{ object.master }} </h6>
     <h3 class="mb-4 text-xl">Сотрудники:</h3>
     {% for w in object.worker.all %}
         <h6 class="mb-4 text-xl"> {{ w }} </h6>{% endfor %}
-    <h3 class="mb-4 text-xl">{{ object.phone_number }}</h3>
+    </table>
+    <table class="flex w-1/2 table table-bordered" data-resizable-columns-id="demo-table">
+        <h3 class="mb-4 text-xl">{{ object.phone_number }}</h3>
     <h3 class="mb-4 text-xl">{{ object.mail }}</h3>
     <h3 class="mb-4 text-xl">{{ object.info }}</h3>
     <h3 class="mb-4 text-xl">{{ object.created_at}}</h3>
     
 
     </table>
-    <a href=" {% url "companies:company" %}">Вернуться к списку компаний</a>
+{% buttons %}
+<li><a href="{% url "companies:company" %}" class="py-2 px-4 rounded-xl btn btn-outline-success">Вернуться к списку компаний</a></li>
+{% endbuttons %}
+    
     </div>  
 </div>
 

@@ -1,6 +1,7 @@
-from django.urls import path
+from django.urls import path, include
 from rest_framework.views import APIView
 from .views import send_sms
+
 
 app_name = 'sms_app'
 
@@ -9,4 +10,5 @@ app_name = 'sms_app'
 
 urlpatterns = [
     path('send-sms/', send_sms, name='send_sms'),
+    
 ]
