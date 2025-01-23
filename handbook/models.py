@@ -1,7 +1,7 @@
 
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-from django.contrib.auth.models import User
+from users.models import User
 
 from django.utils.translation import gettext_lazy as _
 from companies.models import Cities, Companies, Master, PublishedManager, Type_application, Worker
@@ -90,38 +90,7 @@ class Status_application(models.Model):
         
         
         
-class Usernames(models.Model):
-    FULL = 'FULL'
-    ABBREVIATED = 'ABBREVIATED'
-    EMPTY = 'EMPTY'
-    
-    CHOICES_SMS = {
-        FULL: 'полный',
-        ABBREVIATED: 'сокращенный',
-        EMPTY: 'пусто'
-    }
-    
-    
-    name = models.CharField('Имя', max_length=55)
-    phone_number = PhoneNumberField('Номер телефона', blank=True)
-    mail = models.EmailField('E-mail', max_length=254, blank=True)
-    role = models.ForeignKey('Roles', on_delete=models.DO_NOTHING, null=True)
-    # company = models.ForeignKey(Companies, on_delete=models.DO_NOTHING, blank=True, default=None)
-    ATS = models.PositiveIntegerField('Номер АТС', blank=False, default=0)
-    sms = models.CharField(max_length=55, choices=CHOICES_SMS, default=EMPTY)
-    user = models.OneToOneField(User, related_name='user', on_delete=models.CASCADE)
-    
-    def __str__(self):
-        return self.name
-    
-    class Meta:
-        db_table = 'username'
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
-        ordering = ("id",)
-        indexes = [
-            models.Index(fields=["name"]),
-        ]
+
         
 
     

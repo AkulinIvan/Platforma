@@ -4,7 +4,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 
-from handbook.models import Roles
+
 
 # class User(AbstractUser):
 #     first_name = models.CharField(max_length=150, verbose_name='Имя')
@@ -22,27 +22,27 @@ from handbook.models import Roles
 #     def __str__(self):
 #         return self.username
     
-class Userprofile(models.Model):
-    user = models.OneToOneField(User, related_name='userprofile', on_delete=models.CASCADE)
-    role = models.ForeignKey(Roles, null=True, blank=True, verbose_name="Роль", default=None, on_delete=models.PROTECT)
-    phone = PhoneNumberField('Номер телефона', max_length=50, default='Не указан номер')
-    nomer_ATS = models.IntegerField('Номер АТС', null=True)
-    is_admin = models.BooleanField(default=False, verbose_name='Администратор')
-    is_coordinator = models.BooleanField(default=False, verbose_name='Координатор')
-    is_executor = models.BooleanField(default=False, verbose_name='Исполнитель')
-    is_dispatcher = models.BooleanField(default=False, verbose_name='Диспетчер')
-    is_master = models.BooleanField(default=False, verbose_name='Мастер')
-    is_duty_executor = models.BooleanField(default=False, verbose_name='Дежурный исполнитель')
-    is_duty_dispatcher = models.BooleanField(default=False, verbose_name='Дежурный диспетчер')
+# class Userprofile(models.Model):
+#     user = models.OneToOneField(User, related_name='userprofile', on_delete=models.CASCADE)
+#     role = models.ForeignKey(Roles, null=True, blank=True, verbose_name="Роль", default=None, on_delete=models.PROTECT)
+#     phone = PhoneNumberField('Номер телефона', max_length=50, default='Не указан номер')
+#     nomer_ATS = models.IntegerField('Номер АТС', null=True)
+#     is_admin = models.BooleanField(default=False, verbose_name='Администратор')
+#     is_coordinator = models.BooleanField(default=False, verbose_name='Координатор')
+#     is_executor = models.BooleanField(default=False, verbose_name='Исполнитель')
+#     is_dispatcher = models.BooleanField(default=False, verbose_name='Диспетчер')
+#     is_master = models.BooleanField(default=False, verbose_name='Мастер')
+#     is_duty_executor = models.BooleanField(default=False, verbose_name='Дежурный исполнитель')
+#     is_duty_dispatcher = models.BooleanField(default=False, verbose_name='Дежурный диспетчер')
     
-    class Meta:
-        db_table = 'userprofile'
-        verbose_name = 'Профиль'
-        verbose_name_plural = 'Профили'
-        ordering = ("phone",)
-        indexes = [
-            models.Index(fields=["user"]),
-        ]
+#     class Meta:
+#         db_table = 'userprofile'
+#         verbose_name = 'Профиль'
+#         verbose_name_plural = 'Профили'
+#         ordering = ("phone",)
+#         indexes = [
+#             models.Index(fields=["user"]),
+#         ]
     
 
 

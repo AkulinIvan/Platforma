@@ -4,7 +4,7 @@ from django.urls import reverse
 from marshmallow import ValidationError
 from numpy import insert
 from phonenumber_field.modelfields import PhoneNumberField
-from django.contrib.auth.models import User
+from users.models import User
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy
 import django_tables2 as tables

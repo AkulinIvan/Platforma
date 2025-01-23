@@ -1,10 +1,10 @@
 from datetime import datetime
 from django.db import models
-from django.contrib.auth.models import User
+from users.models import User
 
 
 class PhoneNumber(models.Model):
-    name = models.OneToOneField(User, related_name='Пользователь', on_delete=models.CASCADE)
+    # name = models.OneToOneField(User, related_name='Пользователь', on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=11, unique=True)
     
     def __str__(self):

@@ -34,7 +34,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls', namespace='main')),
     path('list_of_request/', include('list_of_request.urls', namespace='list_of_request')),
-    path('user/', include('userprofile.urls', namespace='users')),
+    path('user/', include('users.urls', namespace='users')),
     path('handbook/', include('handbook.urls', namespace='handbook')),
     path('company/', include('companies.urls', namespace='company')),
     path('calls/', include('ATS.urls', namespace='ATS')),

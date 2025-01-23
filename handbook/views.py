@@ -8,7 +8,7 @@ from companies.models import Cities, Companies, Master, Worker
 
 from .forms import AddMasterForm, HouseForm, StreetForm
 
-from .models import  House, Status_application, Street, Type_application, Usernames, View_application
+from .models import  House, Status_application, Street, Type_application, View_application
 
 
 
@@ -198,12 +198,6 @@ def master_add(request):
 
 
 
-def username(request):
-    content = Usernames.objects.all()
-    context = {
-        "title": "Пользователи",
-        "content": content,
-    }
-    return render(request, 'handbook/username.html', context)
+
 
 

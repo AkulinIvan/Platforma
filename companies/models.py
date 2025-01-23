@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from phonenumber_field.modelfields import PhoneNumberField
-from django.contrib.auth.models import User
+from users.models import User
 import django_tables2 as tables
 
 class Type_application(models.Model):

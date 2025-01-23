@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% comment %} {% load crispy_forms_tags %} {% endcomment %}
+
+{% block title %}Регистрация{% endblock title %}
+
+{% block content %}
+
+    <h1>Регистрация</h1>
+    <form method="post"action=".">
+        {% csrf_token %}
+        {{ form }}
+        <button class="py-4 px-8 bg-teal-500 text-white">Зарегистрироваться</button>
+    </form>   
+{% endblock  %}  

@@ -6,23 +6,24 @@ from django.urls import reverse
 # from django.http import JsonResponse
 # from django.contrib.auth.decorators import login_required
 # from django.contrib.auth.models import Group
-from .models import Userprofile
+# from .models import Userprofile
 
 from .forms import LoginUserForm
 
 
 
 def signup(request):
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            Userprofile.objects.create(user=user)
-            return redirect('userprofile:login')
-    else:
-        form = UserCreationForm(request.POST)
+    ...
+    # if request.method == "POST":
+    #     form = UserCreationForm(request.POST)
+    #     if form.is_valid():
+    #         user = form.save()
+    #         Userprofile.objects.create(user=user)
+    #         return redirect('userprofile:login')
+    # else:
+    #     form = UserCreationForm(request.POST)
         
-    return render(request, 'userprofile/signup.html', {'form': form})
+    # return render(request, 'userprofile/signup.html', {'form': form})
 
 
 

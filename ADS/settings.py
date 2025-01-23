@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+from environs import Env
+import humanize
+
+env = Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,12 +26,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-w9^g__uhq4hh#kp@3+7w6&(jq@l8a4*l+8&a8z=(z13u5dgl^t'
+# SECRET_KEY = 'django-insecure-w9^g__uhq4hh#kp@3+7w6&(jq@l8a4*l+8&a8z=(z13u5dgl^t'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+# ALLOWED_HOSTS = ['127.0.0.1']
+
+
+SECRET_KEY = env.str('SECRET_KEY')
+
+DEBUG = env.bool('DEBUG')
+
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 
 # Application definition
@@ -38,12 +50,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     
     'crispy_forms',
     'crispy_bootstrap4',
     
     'main',
     'userprofile',
+    'users',
     'list_of_request',
     'handbook',
     'ATS',
@@ -54,12 +68,11 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'rest_framework',
     'twilio',
-    'rest_framework.authtoken',
+    # 'rest_framework.authtoken',
     'djoser',
     'django_filters',
     'widget_tweaks',
     'bootstrap4',
-    'webpush',
     
 ]
 
@@ -116,7 +129,7 @@ WSGI_APPLICATION = 'ADS.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ADS',
+        'NAME': 'CRM',
         'USER': 'ads',
         'PASSWORD': '[htyghjccsim',
         'HOST': 'localhost',
@@ -155,6 +168,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+humanize.i18n.activate("ru")
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -187,7 +201,14 @@ LOGIN_REDIRECT_URL = '/list_of_request/'
 PHONENUMBER_DB_FORMAT = 'NATIONAL'
 PHONENUMBER_DEFAULT_REGION = 'RU'
 
-# AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'users.User'
+
+EMAIL_HOST = env.str('EMAIL_HOST')
+EMAIL_PORT = env.str('EMAIL_PORT')
+EMAIL_HOST_USER = env.str('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS')
+EMAIL_USE_SSL = env.bool('EMAIL_USE_SSL')
 
 from celery.schedules import crontab
 
@@ -217,11 +238,11 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
     
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ],
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     'rest_framework.authentication.TokenAuthentication',
+    #     'rest_framework.authentication.BasicAuthentication',
+    #     'rest_framework.authentication.SessionAuthentication',
+    # ],
 }
 
 
