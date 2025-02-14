@@ -1,49 +1,21 @@
-{% extends "base.html" %}
-{% block content %}
-{% load bootstrap4 %}
-<!--Разметка модального окна новой заявки-->
-{% comment %} <button
-    type="button"
-    class="btn btn-dark btn-light"
-    data-bs-toggle="modal"
-    data-bs-target="#modalId"
->
-    Создать новую заявку
-</button>
-<div class="modal fade" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalTitleId">
-                    Новая заявка
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="container-fa-align-center">
-                    
-                    {% include "list_of_request/create_application.html" %}
-                        
-                
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Закрыть
-                </button>
-                <a class="btn btn-dark" href="{% url "list_of_request:create_application" %}">
-                    Сохранить
-                </a>
-                {% comment %} <button type="button" class="btn btn-primary">Сохранить</button> 
-            </div>
-        </div>
-    </div>
-</div> {% endcomment %}
-<!--Закончилась разметка модального окна новой заявки-->
 
+{%load static %}
+
+{% load bootstrap4 %}
+{% load render_table from django_tables2 %}
+{% load django_tables2 %}
+
+{% block css %}
+	<link rel="stylesheet" href="{% static "deps/css/table.css" %}">
+    <link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}">
+{% endblock  %}
+{% block content %}
 <div class='text-center py-4 px-2 bg-gray-200 font-semibold'>{{title}}</div>
-<div class="mt-5 pt-5 bg-white custom-shadow rounded">
-<div class="table-responsive">
+{% comment %} <div class="table-responsive">
+    {% comment %} {% render_table table %} 
+{% empty %}
+        <p class="py-2 px-2 w-full">В базе данных еще нет заявок...</p>  {% endcomment %}
+</div>
     <table class="table table-bordered" data-resizable-columns-id="demo-table">
     <tr>
         <th data-resizable-column-id="id">Номер</th>
@@ -101,46 +73,10 @@
                 <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.materials }}</p></td>
                 <td><p class="py-2 px-2 w-full {% cycle 'bg-gray-100' '' %}">{{ c.user }} </p></td>
             </div>
-    </tr>
-    {% empty %}
-        <p class="py-2 px-2 w-full">В базе данных еще нет заявок...</p>
+    </tr> 
+    </table>
+    
         {% endfor %}
-</table> 
-</div>
 
-<!-- Пагинация -->
-
-
-<nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center my-4">
-        <div class="custom-shadow d-flex">
-            <li class="page-item {% if not content.has_previous %}disabled{% endif %}">
-                <a class="page-link" href="{% if content.has_previous %}
-                ?page={{ content.previous_page_number }}
-                {% else %}
-                #
-                {% endif %}">Назад</a>
-            </li>
-            {% for page in content.paginator.page_range %}
-            {% if page >= content.number|add:-2 and page <= content.number|add:2 %}
-            <li class="page-item {% if content.number == page %}active{% endif %}">
-                <a class="page-link" href="?page={{ page }}">{{ page }}</a>
-            </li>
-            {% endif %}
-            {% endfor %}
-            
-
-            <li class="page-item {% if not content.has_next %}disabled{% endif %}">
-                <a class="page-link" href="{% if content.has_next %}
-                ?page={{ content.next_page_number }}
-                {% else %}
-                #
-                {% endif %}">Дальше</a>
-            </li>
-        </div>
-    </ul>
-</nav>
-</div>
 {% endblock  %}
-
 

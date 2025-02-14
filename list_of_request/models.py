@@ -80,7 +80,7 @@ class Articles(models.Model):
     materials = models.CharField('Материалы', max_length=50, null=True, blank=True)
     files = models.ImageField(upload_to='photo', blank=True, null=True, verbose_name="Прикрепленные файлы")
     last_update = models.DateTimeField(verbose_name='Дата изменения заявки', blank=True, null=True, auto_now=True)
-    converted_to_complete = models.BooleanField(default=False)
+    
     
     def save(self, *args, **kwargs):
         self.last_update = datetime.now()

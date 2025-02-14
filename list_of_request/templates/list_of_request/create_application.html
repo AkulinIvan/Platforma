@@ -15,8 +15,13 @@
     <div class="offset-5 col-md-6">
     <h1>Новая заявка</h1>
     </div>
-    <div>
-        <form method="post" enctype='multipart/form-data' id="application-form">
+    {% comment %} <div class="col-md-7">
+        <div class=" bg-white p-4 mb-4 mx-2 rounded custom-shadow">
+            <h3 class="text-center mb-4">Заявки</h3>
+            <div class="container" id="cart-items-container"> {% endcomment %}
+    <div class="container col-md-7">
+    <div class="mt-5 pt-5 mx-4 flex-lg-column bg-white custom-shadow rounded">
+        <form class="form-large" method="post" enctype='multipart/form-data' id="application-form">
             {% csrf_token %}
             {% bootstrap_form form %}
             {% buttons %}
@@ -24,6 +29,7 @@
             {% endbuttons %}
             </form>
             <div class="posts"></div>
+    </div>
     </div>
 {% endblock  %}
         

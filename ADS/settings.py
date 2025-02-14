@@ -26,19 +26,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-w9^g__uhq4hh#kp@3+7w6&(jq@l8a4*l+8&a8z=(z13u5dgl^t'
+SECRET_KEY = 'django-insecure-w9^g__uhq4hh#kp@3+7w6&(jq@l8a4*l+8&a8z=(z13u5dgl^t'
 
-# # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 
-# ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
-SECRET_KEY = env.str('SECRET_KEY')
+# SECRET_KEY = env.str('SECRET_KEY')
 
-DEBUG = env.bool('DEBUG')
+# DEBUG = env.bool('DEBUG')
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+# ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 
 # Application definition
@@ -74,9 +74,13 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'bootstrap4',
     
+    
+    
 ]
 
 AUTH_PASSWORD_VALIDATORS = ["ivanakulin175@gmail.com"]
+
+
 
 WEBPUSH_SETTINGS = {
 "VAPID_PUBLIC_KEY": "BOIJJGpbzb2QGo6fppVU7tpcDsSOJzOs4OiF0NRdlTIG-fjfI1UQkNsQAUCu2-syiQNs63lrVSjx_bL45JALYK0",

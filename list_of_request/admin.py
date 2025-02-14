@@ -16,7 +16,7 @@ class UserApplicationAdmin(admin.TabularInline):
 class ArticlesAdmin(admin.ModelAdmin):
     # exclude = ('user',)
     # prepopulated_fields = {'street': ('house',)}
-    list_display = ['priority', 'fio', 'phone', 'text', 'create_time', 'last_update', 'street', 'house', 'flat', 'worker', 'status', 'converted_to_complete']
+    list_display = ['priority', 'fio', 'phone', 'text', 'create_time', 'last_update', 'street', 'house', 'flat', 'worker', 'status']
     list_editable = ['worker']
     search_fields = ['street', 'worker', 'fio']
     list_filter = ['street', 'worker', 'create_time', 'phone', 'priority', 'status']
@@ -32,7 +32,7 @@ class ArticlesAdmin(admin.ModelAdmin):
         'worker',
         'materials',
         'comment',
-        'converted_to_complete',
+        
     ]
     
     def save_model(self, request, obj, form, change):
